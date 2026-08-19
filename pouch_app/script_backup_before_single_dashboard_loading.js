@@ -419,7 +419,6 @@ function showPage(page, saveHistory = true) {
       creditCards.style.display = "block";
 
     loadCreditCards();
-    loadCreditCardPayments();
 
   }
 
@@ -434,7 +433,6 @@ function showPage(page, saveHistory = true) {
       loans.style.display = "block";
 
     loadLoans();
-    loadLoanPayments();
 
   }
 
@@ -1778,19 +1776,51 @@ function loadCryptoSummary(){
 
 function showDashboardLoading(){
 
-  const netWorth =
-    document.getElementById("netWorth");
+  const ids = [
+
+    "netWorth",
+
+    "dashboardSavings",
+
+    "dashboardCryptocurrencies",
+
+    "dashboardBonds",
+
+    "dashboardCommodities",
+
+    "dashboardStocks",
+
+    "dashboardInvested",
+
+    "dashboardCurrentValue",
+
+    "dashboardPnL",
+
+    "dashboardPersonalIncome",
+
+    "dashboardBusinessIncome",
+
+    "dashboardTotalIncome"
+
+  ];
 
 
-  if(netWorth){
+  ids.forEach(function(id){
 
-    netWorth.textContent =
-      "Dashboard is loading...";
+    const element =
+      document.getElementById(id);
 
-  }
+
+    if(element){
+
+      element.textContent =
+        "Dashboard is loading...";
+
+    }
+
+  });
 
 }
-
 
 
 
@@ -7296,36 +7326,28 @@ function loadCreditCards(){
 
     <p>
   <strong>Balance:</strong>
-  <span class="credit-value">
   ${formatPeso(
     Number(card.balance) || 0
   )}
-  </span>
 </p>
 
 <p>
   <strong>Credit Limit:</strong>
-  <span class="credit-value">
   ${formatPeso(
     Number(card.creditLimit) || 0
   )}
-  </span>
 </p>
 
 <p>
   <strong>Available:</strong>
-  <span class="credit-value">
   ${formatPeso(
     available
   )}
-  </span>
 </p>
 
 <p>
   <strong>Utilization:</strong>
-  <span class="credit-value">
   ${utilization.toFixed(1)}%
-  </span>
 </p>
 
 <br>
@@ -7635,14 +7657,6 @@ function submitCreditCard(){
   // =========================
 
 
-  closeCreditCardModal();
-
-
-  showTransactionLoading(
-    "Saving credit card..."
-  );
-
-
   callAppsScript(
     "saveCreditCard",
     [data]
@@ -7856,27 +7870,21 @@ function loadLoans(){
 
     <p>
       <strong>Outstanding:</strong>
-      <span class="credit-value">
       ${formatPeso(outstanding)}
-      </span>
     </p>
 
 
 
     <p>
       <strong>Original Loan:</strong>
-      <span class="credit-value">
       ${formatPeso(original)}
-      </span>
     </p>
 
 
 
     <p>
       <strong>Paid:</strong>
-      <span class="credit-value">
       ${formatPeso(paid)}
-      </span>
     </p>
 
 
@@ -8225,17 +8233,31 @@ function submitLoan(){
    * SAVING
    */
 
-  closeLoanModal();
-
-
   showTransactionLoading(
     "Saving loan..."
   );
 
 
+  const data = {
+
+    id: id,
+
+    loanName: loanName,
+
+    loanType: loanType,
+
+    date: loanDate,
+
+    originalAmount: originalAmount,
+
+    outstandingBalance: outstandingBalance
+
+  };
+
+
   callAppsScript(
-    "deleteLoan",
-    [id]
+    id ? "updateLoan" : "saveLoan",
+    [data]
   )
 
   .then(function(result){
@@ -8317,6 +8339,140 @@ function submitLoan(){
 
     })
 
+
+    if(id){
+
+
+  callAppsScript(
+    "updateLoan",
+    [{
+      id:id,
+      loanName:loanName,
+      loanType:loanType,
+      date:loanDate,
+      originalAmount:originalAmount,
+      outstandingBalance:outstandingBalance
+    }]
+  )
+
+  .then(function(result){
+
+      if(
+        result &&
+        (
+          result.success === true ||
+          result.status === "success" ||
+          result.result === "success"
+        )
+      ){
+
+        showTransactionSuccess(
+          "Loan updated successfully."
+        );
+
+
+        closeLoanModal();
+
+
+        window.editingLoanId = "";
+
+
+        loadLoans();
+
+      }
+      else{
+
+        showTransactionError(
+          result.message
+        );
+
+      }
+
+    })
+
+
+    .catch(function(error){
+
+      console.error(
+        "Loan Update Error:",
+        error
+      );
+
+
+      showTransactionError(
+        "Unable to update loan."
+      );
+
+    })
+
+  ;
+
+
+}
+else{
+
+
+  callAppsScript(
+    "saveLoan",
+    [{
+      loanName:loanName,
+      loanType:loanType,
+      date:loanDate,
+      originalAmount:originalAmount,
+      outstandingBalance:outstandingBalance
+    }]
+  )
+
+  .then(function(result){
+
+      if(
+        result &&
+        (
+          result.success === true ||
+          result.status === "success" ||
+          result.result === "success"
+        )
+      ){
+
+        showTransactionSuccess(
+          "Loan saved successfully."
+        );
+
+
+        closeLoanModal();
+
+
+        loadLoans();
+
+      }
+      else{
+
+        showTransactionError(
+          result.message
+        );
+
+      }
+
+    })
+
+
+    .catch(function(error){
+
+      console.error(
+        "Loan Save Error:",
+        error
+      );
+
+
+      showTransactionError(
+        "Unable to save loan."
+      );
+
+    })
+
+  ;
+
+}
 
 }
 
@@ -8567,14 +8723,26 @@ function deleteLoan(id){
   }
 
 
-  showTransactionLoading(
-    "Deleting loan..."
-  );
+  const data = {
+
+    id: id,
+
+    loanName: loanName,
+
+    loanType: loanType,
+
+    date: loanDate,
+
+    originalAmount: originalAmount,
+
+    outstandingBalance: outstandingBalance
+
+  };
 
 
   callAppsScript(
-    "deleteLoan",
-    [id]
+    id ? "updateLoan" : "saveLoan",
+    [data]
   )
 
   .then(function(response){
@@ -8656,11 +8824,6 @@ function deleteCreditCard(id){
     return;
 
   }
-
-
-  showTransactionLoading(
-    "Deleting credit card..."
-  );
 
 
   callAppsScript(
@@ -9146,523 +9309,6 @@ function togglePassword(id, icon){
     icon.src = "assets/Open.png";
 
   }
-
-}
-
-
-
-/* =========================
-   CREDIT CARD PAYMENT
-========================= */
-
-
-function openCreditCardPaymentModal(){
-
-  document
-  .getElementById("creditCardPaymentModal")
-  .style.display = "flex";
-
-
-  loadCreditCardPaymentDropdown();
-
-}
-
-
-
-
-function closeCreditCardPaymentModal(){
-
-  document
-  .getElementById("creditCardPaymentModal")
-  .style.display = "none";
-
-}
-
-
-
-
-function loadCreditCardPaymentDropdown(){
-
-  callAppsScript(
-    "getCreditCards",
-    []
-  )
-
-  .then(function(cards){
-
-    const select =
-      document.getElementById(
-        "creditCardPaymentCard"
-      );
-
-
-    if(!select) return;
-
-
-    select.innerHTML = "";
-
-
-    cards.forEach(function(card){
-
-
-      const option =
-        document.createElement("option");
-
-
-      option.value =
-        card.id;
-
-
-      option.textContent =
-        card.cardName +
-        " (₱" +
-        Number(card.balance)
-        .toLocaleString() +
-        ")";
-
-
-      select.appendChild(option);
-
-
-    });
-
-
-  });
-
-}
-
-
-
-
-function saveCreditCardPayment(){
-
-
-  const data = {
-
-
-    cardId:
-      document.getElementById(
-        "creditCardPaymentCard"
-      ).value,
-
-
-    amount:
-      document.getElementById(
-        "creditCardPaymentAmount"
-      ).value,
-
-
-    description:
-      document.getElementById(
-        "creditCardPaymentDescription"
-      ).value
-
-
-  };
-
-
-
-  closeCreditCardPaymentModal();
-
-  showTransactionLoading(
-    "Saving payment..."
-  );
-
-
-
-  callAppsScript(
-    "saveCreditCardPayment",
-    [data]
-  )
-
-  .then(function(result){
-
-    console.log("SAVE CREDIT CARD PAYMENT RESULT:", result);
-
-
-    if(result.success){
-
-
-      showTransactionSuccess(
-        "Payment saved!"
-      );
-
-
-      loadCreditCards();
-      loadCreditCardPayments();
-
-
-    }
-    else{
-
-
-      showTransactionError(
-        result.message
-      );
-
-
-    }
-
-
-  });
-
-
-}
-
-
-
-
-
-/* =========================
-   LOAN PAYMENT
-========================= */
-
-
-function openLoanPaymentModal(){
-
-  document
-    .getElementById("loanPaymentModal")
-    .style.display = "flex";
-
-
-  loadLoanPaymentDropdown();
-
-}
-
-
-
-function closeLoanPaymentModal(){
-
-  document
-    .getElementById("loanPaymentModal")
-    .style.display = "none";
-
-}
-
-
-
-function loadLoanPaymentDropdown(){
-
-  callAppsScript(
-    "getLoans",
-    []
-  )
-
-  .then(function(loans){
-
-    const select =
-      document.getElementById(
-        "loanPaymentLoan"
-      );
-
-
-    if(!select) return;
-
-
-    select.innerHTML = "";
-
-
-    loans.forEach(function(loan){
-
-      const option =
-        document.createElement("option");
-
-
-      option.value =
-        loan.id;
-
-
-      option.textContent =
-        loan.loanName +
-        " - ₱" +
-        Number(
-          loan.outstandingBalance
-        ).toLocaleString();
-
-
-      select.appendChild(option);
-
-    });
-
-  });
-
-}
-
-
-
-
-function saveLoanPayment(){
-
-  console.log("SAVE LOAN PAYMENT CLICKED");
-
-  const data = {
-
-    loanId:
-      document.getElementById(
-        "loanPaymentLoan"
-      ).value,
-
-
-    amount:
-      document.getElementById(
-        "loanPaymentAmount"
-      ).value,
-
-
-    description:
-      document.getElementById(
-        "loanPaymentDescription"
-      ).value
-
-  };
-
-
-  closeLoanPaymentModal();
-
-  showTransactionLoading(
-    "Saving payment..."
-  );
-
-
-  callAppsScript(
-    "saveLoanPayment",
-    [data]
-  )
-
-  .then(function(result){
-
-    console.log("SAVE CREDIT CARD PAYMENT RESULT:", result);
-
-
-    if(result.success){
-
-
-      showTransactionSuccess(
-        "Payment saved!"
-      );
-
-
-      loadLoans();
-      loadLoanPayments();
-
-
-    }
-    else{
-
-
-      showTransactionError(
-        result.message
-      );
-
-
-    }
-
-
-  });
-
-
-}
-
-
-
-/* =========================
-   LOAD CREDIT CARD PAYMENTS
-========================= */
-
-function loadCreditCardPayments(){
-
-  callAppsScript(
-    "getCreditCardPayments",
-    []
-  )
-
-  .then(function(payments){
-
-    const table =
-      document.getElementById(
-        "creditCardPaymentsTable"
-      );
-
-
-    if(!table) return;
-
-
-    let tbody =
-      table.querySelector("tbody");
-
-
-    if(!tbody){
-
-      tbody =
-        document.createElement("tbody");
-
-      table.appendChild(tbody);
-
-    }
-
-
-    tbody.innerHTML = "";
-
-
-    if(
-      !payments ||
-      payments.length === 0
-    ){
-
-      tbody.innerHTML =
-      `
-      <tr>
-        <td colspan="4">
-          No payments yet
-        </td>
-      </tr>
-      `;
-
-      return;
-
-    }
-
-
-
-    payments.forEach(function(payment){
-
-
-      tbody.innerHTML +=
-      `
-      <tr>
-
-        <td>
-          ${payment.date
-          ? new Date(payment.date).toLocaleDateString()
-          : ""}
-        </td>
-
-
-        <td>
-          ${payment.cardName || payment.cardId || ""}
-        </td>
-
-
-        <td>
-          ₱${Number(payment.amount || 0)
-          .toLocaleString()}
-        </td>
-
-
-        <td>
-          ${payment.description || ""}
-        </td>
-
-
-      </tr>
-      `;
-
-
-    });
-
-
-  });
-
-}
-
-
-
-/* =========================
-   LOAD LOAN PAYMENTS
-========================= */
-
-function loadLoanPayments(){
-
-  callAppsScript(
-    "getLoanPayments",
-    []
-  )
-
-  .then(function(payments){
-
-    const table =
-      document.getElementById(
-        "loanTransactionsTable"
-      );
-
-
-    if(!table) return;
-
-
-    let tbody =
-      table.querySelector("tbody");
-
-
-    if(!tbody){
-
-      tbody =
-        document.createElement("tbody");
-
-      table.appendChild(tbody);
-
-    }
-
-
-    tbody.innerHTML = "";
-
-
-    if(
-      !payments ||
-      payments.length === 0
-    ){
-
-      tbody.innerHTML =
-      `
-      <tr>
-        <td colspan="4">
-          No payments yet
-        </td>
-      </tr>
-      `;
-
-      return;
-
-    }
-
-
-
-    payments.forEach(function(payment){
-
-      tbody.innerHTML +=
-      `
-      <tr>
-
-        <td>
-          ${payment.date
-          ? new Date(payment.date).toLocaleDateString()
-          : ""}
-        </td>
-
-
-        <td>
-          ${payment.loanName}
-        </td>
-
-
-        <td>
-          ₱${Number(payment.amount || 0)
-          .toLocaleString()}
-        </td>
-
-
-        <td>
-          ${payment.description || ""}
-        </td>
-
-
-      </tr>
-      `;
-
-
-    });
-
-
-  });
 
 }
 
