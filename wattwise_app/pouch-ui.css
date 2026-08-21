@@ -1,0 +1,2623 @@
+
+/* ===================================
+   WATTWISE COZY GREEN NOTEBOOK UI
+   Pastel Green + Yellow + Orange
+=================================== */
+
+
+:root{
+
+--ww-green:#dcefd8;
+--ww-green-dark:#6b9b63;
+
+--ww-yellow:#fff1b8;
+
+--ww-orange:#f4a261;
+
+--ww-orange-soft:#ffe2c2;
+
+--ww-paper:#fffaf0;
+
+--ww-brown:#5a3825;
+
+--ww-border:#eadcc4;
+
+}
+
+
+
+/* Whole app */
+
+body{
+
+background:#faf5e8!important;
+
+color:var(--ww-brown)!important;
+
+}
+
+
+
+/* All text */
+
+h1,
+h2,
+h3,
+h4,
+p,
+label,
+span,
+td,
+th{
+
+color:var(--ww-brown)!important;
+
+}
+
+
+
+/* Main cards */
+
+.card,
+.dashboard-card,
+.summary-card,
+.stat-card{
+
+
+background:var(--ww-paper)!important;
+
+
+border:
+
+1px solid var(--ww-border)!important;
+
+
+border-radius:24px!important;
+
+
+box-shadow:
+
+4px 6px 18px rgba(90,56,37,.10)
+
+!important;
+
+
+}
+
+
+
+/* Summary cards as sticky notes */
+
+
+.summary-card:nth-child(1){
+
+background:var(--ww-green)!important;
+
+}
+
+
+
+.summary-card:nth-child(2){
+
+background:var(--ww-yellow)!important;
+
+}
+
+
+
+.summary-card:nth-child(3){
+
+background:#e8f3d9!important;
+
+}
+
+
+
+.summary-card:nth-child(4){
+
+background:#fff0c9!important;
+
+}
+
+
+
+
+/* Note tape effect */
+
+.summary-card:before,
+.dashboard-card:before{
+
+
+content:"";
+
+position:absolute;
+
+top:12px;
+
+right:20px;
+
+
+width:45px;
+
+height:12px;
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+border-radius:4px;
+
+transform:rotate(5deg);
+
+}
+
+
+
+/* Headings */
+
+h1{
+
+color:#4d7c47!important;
+
+font-size:34px!important;
+
+}
+
+
+
+h2,
+h3{
+
+color:#6b4a32!important;
+
+}
+
+
+
+/* Buttons */
+
+button,
+.btn{
+
+
+background:#fff8e8!important;
+
+
+color:var(--ww-brown)!important;
+
+
+border:
+
+1px solid var(--ww-border)!important;
+
+
+border-radius:18px!important;
+
+
+box-shadow:
+
+0 5px 12px rgba(90,56,37,.12);
+
+
+}
+
+
+
+/* Orange action buttons */
+
+
+.btn-primary,
+button.primary{
+
+
+background:
+
+var(--ww-orange)!important;
+
+
+color:white!important;
+
+
+border:none!important;
+
+
+}
+
+
+
+/* Hover */
+
+button:hover,
+.btn:hover{
+
+
+transform:translateY(-2px);
+
+background:#ffe9bd!important;
+
+}
+
+
+
+/* Inputs */
+
+input,
+select,
+textarea{
+
+
+background:#fffdf5!important;
+
+
+color:var(--ww-brown)!important;
+
+
+border:
+
+1px solid var(--ww-border)!important;
+
+
+border-radius:16px!important;
+
+
+}
+
+
+
+/* Tables */
+
+
+table{
+
+background:#fffaf0!important;
+
+border-radius:18px!important;
+
+}
+
+
+
+thead{
+
+background:var(--ww-green)!important;
+
+}
+
+
+
+thead th{
+
+color:#4d3928!important;
+
+}
+
+
+
+/* Tags */
+
+.badge,
+.tag{
+
+
+background:var(--ww-yellow)!important;
+
+
+color:var(--ww-brown)!important;
+
+
+border-radius:999px!important;
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.card,
+.dashboard-card,
+.summary-card{
+
+border-radius:20px!important;
+
+}
+
+h1{
+
+font-size:28px!important;
+
+}
+
+}
+
+
+.mobile-nav-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+
+.summary-icon img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+
+.quick-action-icon img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+
+.action-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+
+.primary-button .action-icon,
+.secondary-button .action-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+
+
+/* ===============================
+   WATTWISE LOGIN NOTEBOOK STYLE
+================================ */
+
+.login-box,
+.login-card {
+
+  background:#fffdf5 !important;
+
+  border-radius:28px !important;
+
+  border:2px solid #e5f0d8 !important;
+
+  box-shadow:
+  0 15px 35px rgba(100,80,40,.10) !important;
+
+}
+
+
+.login-logo {
+
+  width:72px;
+  height:72px;
+
+  object-fit:contain;
+
+  background:#e9f7df;
+
+  padding:12px;
+
+  border-radius:22px;
+
+}
+
+
+/* chocolate brown text */
+
+.login-box h1,
+.login-box h2,
+.login-box label {
+
+  color:#6b4630 !important;
+
+}
+
+
+/* softer inputs */
+
+.login-box input {
+
+  background:#fffaf0 !important;
+
+  border:2px solid #f0dfb8 !important;
+
+  color:#6b4630 !important;
+
+}
+
+
+/* notebook button */
+
+.login-box button {
+
+  background:#e8f3d8 !important;
+
+  color:#6b4630 !important;
+
+  border:2px solid #cde3b8 !important;
+
+}
+
+
+.login-box button:hover {
+
+  background:#ffe6a8 !important;
+
+}
+
+
+
+
+/* ===============================
+   LOGIN BOX PASTEL GREEN THEME
+================================ */
+
+
+.login-box,
+.login-card {
+
+  background:#f1faed !important;
+
+  border:2px solid #d4ebc8 !important;
+
+  box-shadow:
+  0 15px 35px rgba(80,120,70,.12) !important;
+
+}
+
+
+
+/* login title */
+
+.login-box h1,
+.login-box h2 {
+
+  color:#6b4630 !important;
+
+}
+
+
+
+/* labels */
+
+.login-box label {
+
+  color:#6b4630 !important;
+
+}
+
+
+
+/* inputs */
+
+.login-box input {
+
+  background:#fffef8 !important;
+
+  border:2px solid #d8e8c9 !important;
+
+}
+
+
+
+/* start button */
+
+.login-box button {
+
+  background:#dff3c8 !important;
+
+  border:2px solid #b9d99b !important;
+
+  color:#6b4630 !important;
+
+}
+
+
+.login-box button:hover {
+
+  background:#c9eaa8 !important;
+
+}
+
+
+
+
+/* ===================================
+   WATTWISE NOTEBOOK DASHBOARD
+   Pastel Green + Yellow + Orange
+=================================== */
+
+
+/* Main background */
+
+body {
+
+background:#f7faf3 !important;
+
+color:#6b4630 !important;
+
+}
+
+
+
+/* Dashboard header */
+
+.dashboard-top h1 {
+
+color:#6b4630 !important;
+
+font-size:36px !important;
+
+font-weight:800 !important;
+
+}
+
+
+
+/* Month selector */
+
+.dashboard-top .month-selector select {
+
+background:#fff8dc !important;
+
+border:2px solid #ead8a8 !important;
+
+color:#6b4630 !important;
+
+border-radius:18px !important;
+
+}
+
+
+
+/* Summary layout */
+
+.summary-grid {
+
+gap:18px !important;
+
+}
+
+
+
+/* Notebook cards */
+
+.summary-card {
+
+
+background:#eef8e8 !important;
+
+border:2px solid #d8eac8 !important;
+
+border-radius:26px !important;
+
+
+box-shadow:
+0 8px 20px rgba(100,80,40,.08) !important;
+
+
+}
+
+
+
+/* Individual sticky note colors */
+
+
+.summary-card:nth-child(1){
+
+background:#e5f4dc !important;
+
+}
+
+
+.summary-card:nth-child(2){
+
+background:#fff1b8 !important;
+
+}
+
+
+.summary-card:nth-child(3){
+
+background:#edf5dc !important;
+
+}
+
+
+.summary-card:nth-child(4){
+
+background:#ffe8c7 !important;
+
+}
+
+
+
+
+/* Text */
+
+.summary-label,
+.summary-small {
+
+color:#7a6656 !important;
+
+}
+
+
+.summary-value {
+
+color:#6b4630 !important;
+
+font-weight:800 !important;
+
+}
+
+
+
+/* Quick action buttons */
+
+
+.quick-actions button {
+
+
+background:#fff9e8 !important;
+
+
+border:2px solid #ead9b3 !important;
+
+
+border-radius:22px !important;
+
+
+color:#6b4630 !important;
+
+
+box-shadow:
+0 6px 15px rgba(80,60,30,.08) !important;
+
+
+}
+
+
+
+.quick-actions button:hover {
+
+
+background:#e9f5d9 !important;
+
+
+}
+
+
+
+
+/* Dashboard sections */
+
+.dashboard-card {
+
+
+background:#fffdf7 !important;
+
+
+border:2px solid #e7dfc8 !important;
+
+
+border-radius:28px !important;
+
+
+box-shadow:
+0 10px 25px rgba(70,50,20,.08) !important;
+
+
+}
+
+
+
+/* headings */
+
+
+.dashboard-card h2 {
+
+color:#6b4630 !important;
+
+}
+
+
+
+
+
+/* ===================================
+   WATTWISE CUTE NOTEBOOK FONT
+=================================== */
+
+
+body,
+button,
+input,
+select,
+textarea {
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+}
+
+
+/* softer headings */
+
+h1,
+h2,
+h3,
+.dashboard-title,
+.summary-value {
+
+  font-family:
+    "Nunito",
+    sans-serif !important;
+
+  letter-spacing:-0.03em !important;
+
+}
+
+
+/* cute rounded buttons */
+
+button,
+.btn {
+
+  font-weight:700 !important;
+
+}
+
+
+
+
+/* ===================================
+   WATTWISE LOGIN PASTEL THEME
+   Green box + Yellow button
+=================================== */
+
+
+/* Login container */
+
+.login-box,
+.login-card {
+
+  background:#e8f5df !important;
+
+  border:2px solid #cfe7bd !important;
+
+  border-radius:30px !important;
+
+  box-shadow:
+  0 12px 30px rgba(80,120,70,.15) !important;
+
+}
+
+
+
+/* Login title */
+
+.login-box h1,
+.login-box h2 {
+
+  color:#6b4630 !important;
+
+}
+
+
+
+/* Input fields */
+
+.login-box input {
+
+  background:#fffdf5 !important;
+
+  border:2px solid #d8e8c9 !important;
+
+  color:#6b4630 !important;
+
+}
+
+
+
+/* Login button pastel yellow */
+
+.login-box button,
+.login-card button {
+
+  background:#ffe8a3 !important;
+
+  color:#6b4630 !important;
+
+  border:2px solid #f2d47a !important;
+
+  border-radius:18px !important;
+
+  font-weight:800 !important;
+
+  box-shadow:
+  0 6px 14px rgba(220,180,70,.25) !important;
+
+}
+
+
+
+.login-box button:hover,
+.login-card button:hover {
+
+  background:#ffdd78 !important;
+
+}
+
+
+
+
+/* ===================================
+   WATTWISE SETUP CARD
+   Pastel Green Notebook Style
+=================================== */
+
+
+/* Main login/setup card */
+
+.setup-card {
+
+  background:#e8f5df !important;
+
+  border:2px solid #cfe7bd !important;
+
+  border-radius:32px !important;
+
+  box-shadow:
+  0 15px 35px rgba(80,120,70,.15) !important;
+
+}
+
+
+
+/* House icon container */
+
+.setup-icon {
+
+  background:#dff3df !important;
+
+  border-radius:24px !important;
+
+}
+
+
+
+/* Logo image */
+
+.setup-icon .login-logo {
+
+  width:75px !important;
+
+  height:75px !important;
+
+  object-fit:contain;
+
+}
+
+
+
+/* Heading */
+
+.setup-card h2 {
+
+  color:#6b4630 !important;
+
+  font-family:"Nunito", sans-serif !important;
+
+}
+
+
+
+/* Description */
+
+.setup-card p {
+
+  color:#7a6656 !important;
+
+}
+
+
+
+/* Labels */
+
+.setup-card label {
+
+  color:#6b4630 !important;
+
+  font-weight:700 !important;
+
+}
+
+
+
+/* Inputs */
+
+.setup-card input {
+
+  background:#fffdf5 !important;
+
+  border:2px solid #d7e8c6 !important;
+
+  border-radius:18px !important;
+
+  color:#6b4630 !important;
+
+}
+
+
+
+/* Start Tracking button */
+
+.setup-card .primary-button {
+
+  background:#ffe8a3 !important;
+
+  border:2px solid #f1d477 !important;
+
+  color:#6b4630 !important;
+
+  border-radius:20px !important;
+
+  font-weight:800 !important;
+
+  box-shadow:
+  0 8px 15px rgba(220,180,70,.25) !important;
+
+}
+
+
+.setup-card .primary-button:hover {
+
+  background:#ffdc78 !important;
+
+}
+
+
+
+
+/* Login error message */
+
+.login-error {
+
+  margin-top: 12px;
+
+  text-align: center;
+
+  color: #8b4513;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  display: none;
+
+}
+
+
+.login-error.show {
+
+  display: block;
+
+}
+
+
+
+/* ===============================
+   CREATE ACCOUNT LINK
+   =============================== */
+
+.create-account {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 14px;
+  color: #7a6656 !important;
+}
+
+.create-account span {
+  color: #6b9b63 !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  cursor: pointer !important;
+  font-weight: 700 !important;
+}
+
+.create-account span:hover {
+  color: #4d7c47 !important;
+}
+
+
+.create-account-link {
+  color: #4d7c47 !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+.create-account-link:hover {
+  color: #6b9b63 !important;
+}
+
+
+/* ===============================
+   CREATE ACCOUNT CLICK FIX
+   =============================== */
+
+.create-account {
+  position: relative !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+.create-account span {
+  position: relative !important;
+  z-index: 10000 !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  color: #4d7c47 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+.create-account span:hover {
+  color: #6b9b63 !important;
+}
+
+.create-account-link {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+
+  display: inline-block !important;
+
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  color: #4d7c47 !important;
+  text-decoration: underline !important;
+
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: 700 !important;
+}
+
+.create-account-link:hover {
+  background: transparent !important;
+  color: #6b9b63 !important;
+  transform: none !important;
+}
+
+
+/* ===================================
+   WATTWISE REGISTRATION MODAL
+   Cozy Pastel Notebook Style
+=================================== */
+
+
+/* Modal backdrop */
+
+#registerModal {
+
+  position: fixed !important;
+
+  inset: 0 !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  padding: 24px !important;
+
+  background:
+    rgba(250, 245, 232, 0.82) !important;
+
+  backdrop-filter:
+    blur(3px);
+
+  z-index: 999999 !important;
+
+}
+
+
+/* Keep modal hidden */
+
+#registerModal.hidden {
+
+  display: none !important;
+
+}
+
+
+/* Overlay */
+
+#registerModal .modal-overlay {
+
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  background:
+    rgba(250, 245, 232, 0.82) !important;
+
+  z-index: 0 !important;
+
+}
+
+
+/* Main registration card */
+
+#registerModal .modal-content {
+
+  position: relative !important;
+
+  z-index: 2 !important;
+
+  width: min(500px, 100%) !important;
+
+  max-height:
+    calc(100vh - 48px) !important;
+
+  overflow-y: auto !important;
+
+  background:
+    #fffdf5 !important;
+
+  border:
+    2px solid #cfe7bd !important;
+
+  border-radius:
+    30px !important;
+
+  box-shadow:
+    0 18px 40px
+    rgba(80,120,70,.15) !important;
+
+}
+
+
+/* ===================================
+   REGISTRATION HEADER
+=================================== */
+
+#registerModal .modal-header {
+
+  position: relative !important;
+
+  display: block !important;
+
+  padding:
+    30px 30px 24px !important;
+
+  text-align: center !important;
+
+  background:
+    #e8f5df !important;
+
+  border-bottom:
+    2px solid #d4ebc8 !important;
+
+  border-radius:
+    28px 28px 0 0 !important;
+
+}
+
+
+/* WattWise icon */
+
+#registerModal .modal-header::before {
+
+  content: "⚡";
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 62px;
+
+  height: 62px;
+
+  margin:
+    0 auto 14px;
+
+  background:
+    #fffdf5;
+
+  border-radius:
+    22px;
+
+  color:
+    #f4a261;
+
+  font-size:
+    30px;
+
+  box-shadow:
+    0 5px 12px
+    rgba(80,120,70,.10);
+
+}
+
+
+/* Heading */
+
+#registerModal .modal-header h2 {
+
+  margin:
+    0 0 7px !important;
+
+  color:
+    #6b4630 !important;
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-size:
+    23px !important;
+
+  font-weight:
+    800 !important;
+
+}
+
+
+/* Subtitle */
+
+#registerModal .modal-header p {
+
+  margin:
+    0 !important;
+
+  color:
+    #7a6656 !important;
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-size:
+    13px !important;
+
+}
+
+
+/* Close button */
+
+#registerModal .close-button {
+
+  position:
+    absolute !important;
+
+  top:
+    18px !important;
+
+  right:
+    18px !important;
+
+  width:
+    38px !important;
+
+  height:
+    38px !important;
+
+  padding:
+    0 !important;
+
+  display:
+    flex !important;
+
+  align-items:
+    center !important;
+
+  justify-content:
+    center !important;
+
+  background:
+    #fffdf5 !important;
+
+  color:
+    #6b4630 !important;
+
+  border:
+    2px solid #eadcc4 !important;
+
+  border-radius:
+    50% !important;
+
+  box-shadow:
+    0 4px 10px
+    rgba(90,56,37,.08) !important;
+
+}
+
+
+/* ===================================
+   REGISTRATION FORM
+=================================== */
+
+#registerModal form {
+
+  padding:
+    26px 30px 30px !important;
+
+  background:
+    #fffdf5 !important;
+
+  border-radius:
+    0 0 28px 28px !important;
+
+}
+
+
+/* Labels */
+
+#registerModal .form-group label {
+
+  display:
+    block;
+
+  margin-bottom:
+    7px;
+
+  color:
+    #6b4630 !important;
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-size:
+    13px !important;
+
+  font-weight:
+    800 !important;
+
+}
+
+
+/* Inputs */
+
+#registerModal input {
+
+  width:
+    100% !important;
+
+  min-height:
+    48px !important;
+
+  padding:
+    12px 15px !important;
+
+  background:
+    #fffdf5 !important;
+
+  color:
+    #6b4630 !important;
+
+  border:
+    2px solid #d8e8c9 !important;
+
+  border-radius:
+    16px !important;
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-size:
+    14px !important;
+
+}
+
+
+/* Input focus */
+
+#registerModal input:focus {
+
+  outline:
+    none !important;
+
+  border-color:
+    #b9d99b !important;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(185,217,155,.25) !important;
+
+}
+
+
+/* ===================================
+   REGISTRATION BUTTONS
+=================================== */
+
+#registerModal .modal-actions {
+
+  display:
+    flex !important;
+
+  justify-content:
+    flex-end !important;
+
+  gap:
+    10px !important;
+
+  margin-top:
+    24px !important;
+
+}
+
+
+/* All modal buttons */
+
+#registerModal .modal-actions button {
+
+  min-height:
+    46px !important;
+
+  padding:
+    10px 20px !important;
+
+  border-radius:
+    18px !important;
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-weight:
+    800 !important;
+
+}
+
+
+/* Cancel */
+
+#registerModal .secondary-button {
+
+  background:
+    #fff8e8 !important;
+
+  color:
+    #6b4630 !important;
+
+  border:
+    2px solid #eadcc4 !important;
+
+  box-shadow:
+    0 5px 12px
+    rgba(90,56,37,.08) !important;
+
+}
+
+
+/* Create Account */
+
+#registerModal .primary-button {
+
+  background:
+    #ffe8a3 !important;
+
+  color:
+    #6b4630 !important;
+
+  border:
+    2px solid #f2d47a !important;
+
+  border-radius:
+    18px !important;
+
+  box-shadow:
+    0 6px 14px
+    rgba(220,180,70,.22) !important;
+
+}
+
+
+/* Hover */
+
+#registerModal .secondary-button:hover {
+
+  background:
+    #ffe9bd !important;
+
+}
+
+
+#registerModal .primary-button:hover {
+
+  background:
+    #ffdc78 !important;
+
+  transform:
+    translateY(-2px);
+
+}
+
+
+/* Registration message */
+
+#registerModal #registerMessage {
+
+  color:
+    #7a6656 !important;
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+}
+
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media(max-width:600px) {
+
+  #registerModal {
+
+    padding:
+      14px !important;
+
+  }
+
+  #registerModal .modal-content {
+
+    width:
+      100% !important;
+
+    max-height:
+      calc(100vh - 28px) !important;
+
+    border-radius:
+      24px !important;
+
+  }
+
+  #registerModal .modal-header {
+
+    padding:
+      25px 20px 20px !important;
+
+    border-radius:
+      22px 22px 0 0 !important;
+
+  }
+
+  #registerModal form {
+
+    padding:
+      22px 20px 24px !important;
+
+  }
+
+  #registerModal .modal-actions {
+
+    flex-direction:
+      column-reverse !important;
+
+  }
+
+  #registerModal .modal-actions button {
+
+    width:
+      100% !important;
+
+  }
+
+}
+
+
+
+/* ===================================
+   WATTWISE REGISTRATION LOGO
+   Replace ⚡ with actual logo
+=================================== */
+
+#registerModal .modal-header::before {
+
+  content: "" !important;
+
+  display: block !important;
+
+  width: 72px !important;
+
+  height: 72px !important;
+
+  margin: 0 auto 14px !important;
+
+  background:
+    #fffdf5
+    url("assets/logo.png")
+    center
+    center
+    / contain
+    no-repeat !important;
+
+  border-radius: 22px !important;
+
+  box-shadow:
+    0 5px 12px
+    rgba(80,120,70,.10) !important;
+
+}
+
+
+
+/* ===================================
+   WATTWISE REGISTRATION LOGO
+   Transparent Long Logo
+=================================== */
+
+#registerModal .modal-header::before {
+
+  content: "" !important;
+
+  display: block !important;
+
+  width: 180px !important;
+
+  height: 65px !important;
+
+  margin: 0 auto 14px !important;
+
+  background:
+    url("assets/Wattwise logo long.png")
+    center
+    center
+    / contain
+    no-repeat !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  background-color: transparent !important;
+
+}
+
+
+/* ===================================
+   WATTWISE REGISTRATION LOGO
+   Transparent Long Logo
+=================================== */
+
+#registerModal .modal-header::before {
+
+  content: "" !important;
+
+  display: block !important;
+
+  width: 180px !important;
+
+  height: 65px !important;
+
+  margin: 0 auto 14px !important;
+
+  background:
+    url("assets/WattWise long logo (1).png")
+    center
+    center
+    / contain
+    no-repeat !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  background-color: transparent !important;
+
+}
+
+
+/* ===================================
+   WATTWISE REGISTRATION LOGO
+=================================== */
+
+#registerModal .modal-header::before {
+
+  content: "" !important;
+
+  display: block !important;
+
+  width: 180px !important;
+
+  height: 65px !important;
+
+  margin: 0 auto 14px !important;
+
+  background:
+    url("assets/wattwise.png")
+    center
+    center
+    / contain
+    no-repeat !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  background-color: transparent !important;
+
+}
+
+
+/* ===================================
+   WATTWISE REGISTRATION LOGO
+=================================== */
+
+#registerModal .modal-header::before {
+
+  content: "" !important;
+
+  display: block !important;
+
+  width: 180px !important;
+
+  height: 65px !important;
+
+  margin: 0 auto 14px !important;
+
+  background:
+    url("assets/wattlogo.png")
+    center
+    center
+    / contain
+    no-repeat !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  background-color: transparent !important;
+
+}
+
+
+/* ===================================
+   LOGIN LINKS - MATCHING WATTWISE STYLE
+=================================== */
+
+.forgot-password,
+.create-account {
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-size: 16px !important;
+
+  font-weight: 600 !important;
+
+  color: #7a6656 !important;
+
+  line-height: 1.5 !important;
+
+}
+
+
+/* Links */
+
+.forgot-password span,
+.create-account-link {
+
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    system-ui,
+    sans-serif !important;
+
+  font-size: 16px !important;
+
+  font-weight: 700 !important;
+
+  color: #4d7c47 !important;
+
+  text-decoration: underline !important;
+
+  text-decoration-thickness: 1.5px !important;
+
+  text-underline-offset: 3px !important;
+
+}
+
+
+/* Hover */
+
+.forgot-password span:hover,
+.create-account-link:hover {
+
+  color: #6b9b63 !important;
+
+}
+
+
+
+/* ===================================
+   WATTWISE LOGIN LOGO
+   Replace House Icon
+=================================== */
+
+.setup-icon {
+
+  background:
+    transparent !important;
+
+  width:
+    180px !important;
+
+  height:
+    70px !important;
+
+  margin:
+    0 auto 20px !important;
+
+  border-radius:
+    0 !important;
+
+  display:
+    flex !important;
+
+  align-items:
+    center !important;
+
+  justify-content:
+    center !important;
+
+}
+
+
+/* Hide the existing house/logo image */
+
+.setup-icon img {
+
+  display:
+    none !important;
+
+}
+
+
+/* Show WattWise logo */
+
+.setup-icon::before {
+
+  content:
+    "" !important;
+
+  display:
+    block !important;
+
+  width:
+    180px !important;
+
+  height:
+    70px !important;
+
+  background:
+    url("assets/wattlogo.png")
+    center
+    center
+    / contain
+    no-repeat !important;
+
+  background-color:
+    transparent !important;
+
+  border:
+    none !important;
+
+  box-shadow:
+    none !important;
+
+}
+
+
+
+/* =========================================================
+   WATTWISE RESET PASSWORD MODAL
+   MATCH CREATE ACCOUNT MODAL
+   ========================================================= */
+
+#resetPasswordModal {
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+
+#resetPasswordModal .reset-password-modal {
+  width: min(500px, 100%) !important;
+  max-width: 500px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+  background: #fffdf5 !important;
+  border: 2px solid #cfe7bd !important;
+  border-radius: 30px !important;
+  box-shadow: 0 15px 35px rgba(80,120,70,.15) !important;
+}
+
+#resetPasswordModal .reset-password-header {
+  position: relative;
+  padding: 34px 40px 28px !important;
+  background: #e8f5df !important;
+  border-bottom: 2px solid #cfe7bd !important;
+  border-radius: 28px 28px 0 0 !important;
+  text-align: center;
+}
+
+#resetPasswordModal .reset-password-logo {
+  display: block !important;
+  width: 78px !important;
+  height: 78px !important;
+  object-fit: contain !important;
+  margin: 0 auto 12px !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+#resetPasswordModal .reset-password-header h2 {
+  margin: 0 !important;
+  color: #6b4630 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.03em !important;
+}
+
+#resetPasswordModal .reset-password-header p {
+  margin: 12px 0 0 !important;
+  color: #7a6656 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 18px !important;
+  line-height: 1.4 !important;
+}
+
+#resetPasswordModal .close-button {
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  width: 52px !important;
+  height: 52px !important;
+  padding: 0 !important;
+  background: #fffdf5 !important;
+  color: #6b4630 !important;
+  border: 2px solid #eadcc4 !important;
+  border-radius: 50% !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+#resetPasswordModal .reset-password-body {
+  padding: 34px 48px 40px !important;
+  background: #fffdf5 !important;
+}
+
+#resetPasswordModal .form-group {
+  margin: 0 0 25px !important;
+}
+
+#resetPasswordModal .form-group label {
+  display: block !important;
+  margin: 0 0 10px !important;
+  color: #6b4630 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+#resetPasswordModal input {
+  width: 100% !important;
+  height: 58px !important;
+  padding: 0 18px !important;
+  box-sizing: border-box !important;
+  background: #fffdf5 !important;
+  color: #6b4630 !important;
+  border: 2px solid #d8e8c9 !important;
+  border-radius: 18px !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 18px !important;
+  outline: none !important;
+}
+
+#resetPasswordModal input:focus {
+  border-color: #b9d99b !important;
+}
+
+#resetPasswordModal .reset-code-button {
+  display: block !important;
+  margin: 0 auto 28px !important;
+  padding: 14px 28px !important;
+  background: #fff8e8 !important;
+  color: #6b4630 !important;
+  border: 2px solid #eadcc4 !important;
+  border-radius: 18px !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+
+#resetPasswordModal .reset-password-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-top: 32px !important;
+}
+
+#resetPasswordModal .reset-password-actions .secondary-button {
+  background: #fff8e8 !important;
+  color: #6b4630 !important;
+  border: 2px solid #eadcc4 !important;
+  border-radius: 18px !important;
+  padding: 14px 26px !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+
+#resetPasswordModal .reset-password-actions .primary-button {
+  background: #ffe8a3 !important;
+  color: #6b4630 !important;
+  border: 2px solid #f2d47a !important;
+  border-radius: 18px !important;
+  padding: 14px 26px !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 14px rgba(220,180,70,.25) !important;
+}
+
+@media (max-width: 768px) {
+
+  #resetPasswordModal .reset-password-header {
+    padding: 28px 24px 24px !important;
+  }
+
+  #resetPasswordModal .reset-password-body {
+    padding: 28px 24px 30px !important;
+  }
+
+  #resetPasswordModal .reset-password-header h2 {
+    font-size: 28px !important;
+  }
+
+  #resetPasswordModal .reset-password-header p {
+    font-size: 15px !important;
+  }
+
+  #resetPasswordModal .reset-password-actions {
+    justify-content: stretch !important;
+  }
+
+  #resetPasswordModal .reset-password-actions button {
+    flex: 1 !important;
+  }
+
+}
+
+
+/* =========================================================
+   RESET PASSWORD MODAL - ABOVE LOGIN SCREEN
+   ========================================================= */
+
+#resetPasswordModal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999999 !important;
+}
+
+#resetPasswordModal .modal-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+}
+
+#resetPasswordModal .reset-password-modal {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+#loginScreen {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+#resetPasswordModal:not(.hidden) {
+  z-index: 9999999 !important;
+}
+
+/* =========================================================
+   RESET PASSWORD - SOLID MODAL COVER
+   ========================================================= */
+
+#resetPasswordModal {
+  background: #faf5e8 !important;
+}
+
+#resetPasswordModal .modal-overlay {
+  background: #faf5e8 !important;
+  opacity: 1 !important;
+}
+
+#resetPasswordModal .reset-password-modal {
+  background: #fffdf5 !important;
+}
+
+/* =========================================================
+   RESET CODE LOADING MESSAGE
+   ========================================================= */
+
+#resetCodeLoading {
+  text-align: center !important;
+  margin: -14px auto 24px !important;
+  color: #6b9b63 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+#resetCodeLoading.hidden {
+  display: none !important;
+}
+
+#resetCodeLoading::after {
+  content: "..." !important;
+  animation: resetCodeDots 1.2s infinite !important;
+}
+
+@keyframes resetCodeDots {
+  0% {
+    content: "." !important;
+  }
+
+  33% {
+    content: ".." !important;
+  }
+
+  66% {
+    content: "..." !important;
+  }
+
+  100% {
+    content: "." !important;
+  }
+}
+
+
+/* =========================================================
+   RESET CODE LOADING MESSAGE
+   ========================================================= */
+
+#resetCodeLoading {
+  text-align: center !important;
+  margin: -14px auto 24px !important;
+  color: #6b9b63 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+#resetCodeLoading.hidden {
+  display: none !important;
+}
+
+#resetCodeLoading::after {
+  content: "." !important;
+  animation: resetCodeDots 1.2s infinite !important;
+}
+
+@keyframes resetCodeDots {
+  0% {
+    content: "." !important;
+  }
+
+  33% {
+    content: ".." !important;
+  }
+
+  66% {
+    content: "..." !important;
+  }
+
+  100% {
+    content: "." !important;
+  }
+}
+
+
+/* =========================================================
+   RESET PASSWORD - MATCH LOGIN / CREATE ACCOUNT FONT SIZES
+   ========================================================= */
+
+#resetPasswordModal .reset-password-header h2 {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+#resetPasswordModal .reset-password-header p {
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+}
+
+#resetPasswordModal .form-group label {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+#resetPasswordModal input {
+  font-size: 16px !important;
+}
+
+#resetPasswordModal .reset-code-button {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+#resetPasswordModal .reset-password-actions .secondary-button,
+#resetPasswordModal .reset-password-actions .primary-button {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   RESET PASSWORD
+   EXACT CREATE ACCOUNT TYPOGRAPHY + SPACING
+   ========================================================= */
+
+/* Modal */
+#resetPasswordModal .reset-password-modal {
+  width: min(500px, 100%) !important;
+  max-width: 500px !important;
+  max-height: calc(100vh - 48px) !important;
+  overflow-y: auto !important;
+  background: #fffdf5 !important;
+  border: 2px solid #cfe7bd !important;
+  border-radius: 30px !important;
+  box-shadow: 0 18px 40px rgba(80,120,70,.15) !important;
+}
+
+/* Header */
+#resetPasswordModal .reset-password-header {
+  padding: 30px 30px 24px !important;
+  background: #e8f5df !important;
+  border-bottom: 2px solid #d4ebc8 !important;
+  border-radius: 28px 28px 0 0 !important;
+}
+
+/* Logo */
+#resetPasswordModal .reset-password-logo {
+  width: 72px !important;
+  height: 72px !important;
+  margin: 0 auto 14px !important;
+  object-fit: contain !important;
+}
+
+/* Reset Password heading */
+#resetPasswordModal .reset-password-header h2 {
+  margin: 0 0 7px !important;
+  color: #6b4630 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 23px !important;
+  font-weight: 800 !important;
+  line-height: normal !important;
+  letter-spacing: normal !important;
+}
+
+/* Subtitle */
+#resetPasswordModal .reset-password-header p {
+  margin: 0 !important;
+  color: #7a6656 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 13px !important;
+  line-height: normal !important;
+}
+
+/* Close button */
+#resetPasswordModal .close-button {
+  top: 18px !important;
+  right: 18px !important;
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 20px !important;
+}
+
+/* Form body */
+#resetPasswordModal .reset-password-body {
+  padding: 26px 30px 30px !important;
+  background: #fffdf5 !important;
+}
+
+/* Form groups */
+#resetPasswordModal .form-group {
+  margin: 0 0 20px !important;
+}
+
+/* Labels */
+#resetPasswordModal .form-group label {
+  display: block !important;
+  margin-bottom: 7px !important;
+  color: #6b4630 !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+/* Inputs */
+#resetPasswordModal input {
+  width: 100% !important;
+  min-height: 48px !important;
+  height: auto !important;
+  padding: 12px 15px !important;
+  box-sizing: border-box !important;
+  background: #fffdf5 !important;
+  color: #6b4630 !important;
+  border: 2px solid #d8e8c9 !important;
+  border-radius: 16px !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 14px !important;
+  line-height: normal !important;
+}
+
+/* Send Reset Code */
+#resetPasswordModal .reset-code-button {
+  display: block !important;
+  min-height: 46px !important;
+  margin: 0 auto 20px !important;
+  padding: 10px 20px !important;
+  border-radius: 18px !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+
+/* Buttons */
+#resetPasswordModal .reset-password-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 24px !important;
+}
+
+#resetPasswordModal .reset-password-actions button {
+  min-height: 46px !important;
+  padding: 10px 20px !important;
+  border-radius: 18px !important;
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+
+/* Success / error message */
+#resetPasswordModal #resetPasswordMessage {
+  font-family: "Nunito", "Comic Sans MS", system-ui, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+/* Mobile - same proportions as Create Account */
+@media (max-width: 600px) {
+
+  #resetPasswordModal {
+    padding: 14px !important;
+  }
+
+  #resetPasswordModal .reset-password-modal {
+    width: 100% !important;
+    max-height: calc(100vh - 28px) !important;
+    border-radius: 24px !important;
+  }
+
+  #resetPasswordModal .reset-password-header {
+    padding: 25px 20px 20px !important;
+    border-radius: 22px 22px 0 0 !important;
+  }
+
+  #resetPasswordModal .reset-password-body {
+    padding: 22px 20px 24px !important;
+  }
+
+}
+
+
+/* =========================================================
+   DASHBOARD CARD SPACING
+   ========================================================= */
+
+.comparison-card,
+.dashboard-card,
+.tips-card {
+  margin-bottom: 16px !important;
+}
+
+/* Prevent extra space after the final card */
+.tips-card {
+  margin-bottom: 0 !important;
+}
+
+
+/* =========================================================
+   WATTWISE LOADING SPACING
+   Applies to ALL loading messages
+   ========================================================= */
+
+.loading-box {
+  gap: 14px !important;
+}
+
+.loading-box .spinner {
+  margin-bottom: 6px !important;
+}
+
+#loadingText {
+  margin-top: 4px !important;
+}
+
+
+/* =========================================================
+   LOADING OVERLAY - MUST COVER ALL LOGIN CONTENT
+   ========================================================= */
+
+#loadingOverlay,
+.loading-overlay {
+  z-index: 99999999 !important;
+}
+
+
+/* =========================================================
+   ELECTRICITY BILL SUMMARY - PROPER INNER SPACING
+   ========================================================= */
+
+.bill-content {
+  padding: 24px 30px 30px !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep all bill summary content inside the modal */
+.bill-content .form-group {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Bill month dropdown */
+.bill-content select {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Selected month / kWh values */
+.bill-content #billViewMonth,
+.bill-content #billViewKwh {
+  box-sizing: border-box !important;
+}
+
+/* Electricity charge rows */
+.bill-content > div[onclick] {
+  padding: 14px 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Section heading */
+.bill-content h3 {
+  margin-top: 24px !important;
+  margin-bottom: 14px !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .bill-content {
+    padding: 20px 18px 24px !important;
+  }
+
+}
+
+/* =========================================================
+   VIEW BILL - ELECTRICITY CHARGES STRUCTURE
+   ========================================================= */
+
+.bill-section-label {
+  margin-top: 24px !important;
+  margin-bottom: 12px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #6b4a35 !important;
+}
+
+.bill-consumption-value {
+  margin-bottom: 22px !important;
+  padding: 16px 18px !important;
+  background: #f5f7f4 !important;
+  border-radius: 14px !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: #1d281f !important;
+}
+
+.additional-charges-label {
+  margin-top: 28px !important;
+}
+
+.bill-charge-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  min-height: 48px !important;
+  font-size: 16px !important;
+  color: #687269 !important;
+}
+
+.bill-charge-row > span:last-of-type {
+  margin-left: auto !important;
+  color: #6b4630 !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+.bill-total-additional {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-top: 18px !important;
+  padding-top: 16px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #6b4630 !important;
+}
+
+.bill-total-additional span:last-child {
+  white-space: nowrap !important;
+}
+
+.bill-divider {
+  height: 1px !important;
+  background: #ddd8cf !important;
+  margin: 8px 0 24px !important;
+}
+
