@@ -311,7 +311,7 @@ function startTracker() {
               result &&
               result.message
                 ? result.message
-                : "Email and Password do not match. Please make sure you have the correct login details.";
+                : "Invalid email or password.";
 
 
             errorBox.classList.add(
@@ -2258,17 +2258,26 @@ console.log('APP.userId = ' + APP.userId);
           }
 
 
+          hideLoading();
+
+
           closeApplianceModal();
 
 
-          showToast(
+          showLoading(
             data.applianceId
-              ? 'Appliance updated successfully.'
-              : 'Appliance added successfully.'
+              ? 'Appliance updated successfully'
+              : 'Appliance saved successfully'
           );
 
 
-          refreshDashboard();
+          setTimeout(function() {
+
+            hideLoading();
+
+            refreshDashboard();
+
+          }, 1500);
 
       })
 
@@ -2788,12 +2797,18 @@ function saveRate(
         closeRateModal();
 
 
-        showToast(
-          'Electricity rate saved successfully.'
+        showLoading(
+          'Electricity rate saved successfully'
         );
 
 
-        refreshDashboard();
+        setTimeout(function() {
+
+          hideLoading();
+
+          refreshDashboard();
+
+        }, 1500);
 
       })
 
@@ -3049,225 +3064,229 @@ function saveActualBill(event) {
 
   event.preventDefault();
 
-
   const data = {
-
 
     userId:
       APP.userId,
 
-
     billMonth:
-      document.getElementById(
-        "billMonth"
-      ).value,
-
+      document.getElementById("billMonth").value,
 
     actualBill:
       Number(
-        document.getElementById(
-          "actualBill"
-        ).value
+        document.getElementById("actualBill").value
       ),
-
 
     actualKwh:
       Number(
-        document.getElementById(
-          "actualKwh"
-        ).value
+        document.getElementById("actualKwh").value
       ),
-
 
     generation:
       Number(
-        document.getElementById(
-          "generation"
-        ).value
+        document.getElementById("generation").value
       ),
-
 
     transmission:
       Number(
-        document.getElementById(
-          "transmission"
-        ).value
+        document.getElementById("transmission").value
       ),
-
 
     systemLoss:
       Number(
-        document.getElementById(
-          "systemLoss"
-        ).value
+        document.getElementById("systemLoss").value
       ),
-
 
     distribution:
       Number(
-        document.getElementById(
-          "distribution"
-        ).value
+        document.getElementById("distribution").value
       ),
-
 
     seniorCitizen:
       Number(
-        document.getElementById(
-          "seniorCitizen"
-        ).value
+        document.getElementById("seniorCitizen").value
       ),
-
 
     governmentTaxes:
       Number(
-        document.getElementById(
-          "governmentTaxes"
-        ).value
+        document.getElementById("governmentTaxes").value
       ),
-
 
     universalCharges:
       Number(
-        document.getElementById(
-          "universalCharges"
-        ).value
+        document.getElementById("universalCharges").value
       ),
-
 
     fitAll:
       Number(
-        document.getElementById(
-          "fitAll"
-        ).value
+        document.getElementById("fitAll").value
       ),
-
 
     geaAll:
       Number(
-        document.getElementById(
-          "geaAll"
-        ).value
+        document.getElementById("geaAll").value
       ),
-
 
     lifeline:
       Number(
-        document.getElementById(
-          "lifeline"
-        ).value
+        document.getElementById("lifeline").value
       ),
-
 
     otherCharges:
       Number(
-        document.getElementById(
-          "otherCharges"
-        ).value
+        document.getElementById("otherCharges").value
       ),
 
-
     notes:
-      document.getElementById(
-        "billNotes"
-      ).value
+      document.getElementById("billNotes").value
 
   };
 
 
   console.log(
-    "Saving actual bill:",
+    "================================="
+  );
+
+  console.log(
+    "BILL SAVE DIAGNOSTIC"
+  );
+
+  console.log(
+    "generation input:",
+    document.getElementById("generation")?.value
+  );
+
+  console.log(
+    "transmission input:",
+    document.getElementById("transmission")?.value
+  );
+
+  console.log(
+    "systemLoss input:",
+    document.getElementById("systemLoss")?.value
+  );
+
+  console.log(
+    "distribution input:",
+    document.getElementById("distribution")?.value
+  );
+
+  console.log(
+    "seniorCitizen input:",
+    document.getElementById("seniorCitizen")?.value
+  );
+
+  console.log(
+    "governmentTaxes input:",
+    document.getElementById("governmentTaxes")?.value
+  );
+
+  console.log(
+    "universalCharges input:",
+    document.getElementById("universalCharges")?.value
+  );
+
+  console.log(
+    "fitAll input:",
+    document.getElementById("fitAll")?.value
+  );
+
+  console.log(
+    "geaAll input:",
+    document.getElementById("geaAll")?.value
+  );
+
+  console.log(
+    "lifeline input:",
+    document.getElementById("lifeline")?.value
+  );
+
+  console.log(
+    "otherCharges input:",
+    document.getElementById("otherCharges")?.value
+  );
+
+  console.log(
+    "FINAL DATA SENT:",
     data
   );
 
-
-const loadingOverlay =
-document.querySelector(
-  ".loading-overlay"
-);
-
-const loadingText =
-document.getElementById(
-  "loadingText"
-);
-
-
-if(loadingText){
-
-  loadingText.textContent =
-    "Saving actual bill...";
-
-}
-
-
-if(loadingOverlay){
-
-  loadingOverlay.classList.remove(
-    "hidden"
+  console.log(
+    "================================="
   );
 
-}
+
+  showLoading(
+    "Saving actual bill..."
+  );
+
 
   saveActualBillDirect(data)
 
     .then(function(response) {
 
+      console.log(
+        "Bill saved:",
+        response
+      );
 
-        console.log(
-          "Bill saved:",
-          response
+
+      if (
+        !response ||
+        !response.success
+      ) {
+
+        hideLoading();
+
+        showToast(
+          response &&
+          response.message
+            ? response.message
+            : "Unable to save bill."
         );
 
+        return;
 
-        if(
-          !response ||
-          !response.success
-        ){
-
-          showToast(
-            response &&
-            response.message
-              ? response.message
-              : "Unable to save bill."
-          );
-
-          return;
-
-        }
+      }
 
 
-        closeActualBillModal();
+      closeActualBillModal();
 
+
+      showLoading(
+        "Actual Bill saved successfully"
+      );
+
+
+      setTimeout(function() {
+
+        hideLoading();
 
         refreshDashboard();
 
+      }, 1500);
 
-        showToast(
-          "Actual bill saved successfully!"
-        );
-
-
-      })
+    })
 
 
     .catch(function(error) {
 
-
-        console.error(
-          "Save bill error:",
-          error
-        );
-
-
-        showToast(
-          getErrorMessage(error)
-        );
+      console.error(
+        "Save bill error:",
+        error
+      );
 
 
-      });
+      hideLoading();
+
+
+      showToast(
+        getErrorMessage(error)
+      );
+
+    });
 
 }
-
 
 
 /* =====================================================
@@ -3893,140 +3912,511 @@ displaySelectedBill();
 
 
 
-function displaySelectedBill(){
+function displaySelectedBill() {
 
+  const dropdown =
+    document.getElementById(
+      "billMonthDropdown"
+    );
+
+  if (!dropdown) {
+    console.error(
+      "billMonthDropdown not found"
+    );
+    return;
+  }
 
   const selectedMonth =
-    document
-      .getElementById(
-        "billMonthDropdown"
-      )
-      .value;
-
-
+    dropdown.value;
 
   const bill =
     APP.actualBills.find(
-      function(item){
+      function(item) {
 
         return (
-          item.month === selectedMonth
+          String(item.month).trim()
+          ===
+          String(selectedMonth).trim()
         );
 
       }
     );
 
-
+  console.log(
+    "================================="
+  );
 
   console.log(
-    "SELECTED BILL:",
+    "DISPLAYING SELECTED BILL"
+  );
+
+  console.log(
+    "Selected month:",
+    selectedMonth
+  );
+
+  console.log(
+    "Selected bill:",
     bill
   );
 
+  console.log(
+    "================================="
+  );
 
 
-  if(!bill){
+  if (!bill) {
+
+    console.warn(
+      "NO BILL FOUND FOR MONTH:",
+      selectedMonth
+    );
 
     return;
 
   }
 
 
+  // =====================================
+  // MONTH
+  // =====================================
 
-  document
-    .getElementById(
+  const month =
+    document.getElementById(
       "billViewMonth"
-    )
-    .textContent =
-    bill.month || "—";
+    );
+
+  if (month) {
+
+    month.textContent =
+      bill.month || "—";
+
+  }
 
 
+  // =====================================
+  // ACTUAL CONSUMPTION
+  // =====================================
 
-  document
-    .getElementById(
+  const kwh =
+    document.getElementById(
+      "billViewKwh"
+    );
+
+  if (kwh) {
+
+    kwh.textContent =
+      formatNumber(
+        bill.actualKwh,
+        2
+      ) +
+      " kWh";
+
+  }
+
+
+  // =====================================
+  // GENERATION
+  // =====================================
+
+  const generation =
+    document.getElementById(
+      "billViewGeneration"
+    );
+
+  if (generation) {
+
+    generation.textContent =
+      formatPHP(
+        bill.generation
+      );
+
+  }
+
+
+  // =====================================
+  // TRANSMISSION
+  // =====================================
+
+  const transmission =
+    document.getElementById(
+      "billViewTransmission"
+    );
+
+  if (transmission) {
+
+    transmission.textContent =
+      formatPHP(
+        bill.transmission
+      );
+
+  }
+
+
+  // =====================================
+  // SYSTEM LOSS
+  // =====================================
+
+  const systemLoss =
+    document.getElementById(
+      "billViewSystemLoss"
+    );
+
+  if (systemLoss) {
+
+    systemLoss.textContent =
+      formatPHP(
+        bill.systemLoss
+      );
+
+  }
+
+
+  // =====================================
+  // DISTRIBUTION
+  // =====================================
+
+  const distribution =
+    document.getElementById(
+      "billViewDistribution"
+    );
+
+  if (distribution) {
+
+    distribution.textContent =
+      formatPHP(
+        bill.distribution
+      );
+
+  }
+
+
+  // =====================================
+  // SENIOR CITIZEN
+  // =====================================
+
+  const seniorCitizen =
+    document.getElementById(
+      "billViewSeniorCitizen"
+    );
+
+  if (seniorCitizen) {
+
+    seniorCitizen.textContent =
+      formatPHP(
+        bill.seniorCitizen
+      );
+
+  }
+
+
+  // =====================================
+  // GOVERNMENT TAXES
+  // =====================================
+
+  const governmentTaxes =
+    document.getElementById(
+      "billViewGovernmentTaxes"
+    );
+
+  if (governmentTaxes) {
+
+    governmentTaxes.textContent =
+      formatPHP(
+        bill.governmentTaxes
+      );
+
+  }
+
+
+  // =====================================
+  // UNIVERSAL CHARGES
+  // =====================================
+
+  const universalCharges =
+    document.getElementById(
+      "billViewUniversalCharges"
+    );
+
+  if (universalCharges) {
+
+    universalCharges.textContent =
+      formatPHP(
+        bill.universalCharges
+      );
+
+  }
+
+
+  // =====================================
+  // FIT-ALL
+  // =====================================
+
+  const fitAll =
+    document.getElementById(
+      "billViewFitAll"
+    );
+
+  if (fitAll) {
+
+    fitAll.textContent =
+      formatPHP(
+        bill.fitAll
+      );
+
+  }
+
+
+  // =====================================
+  // GEA-ALL
+  // =====================================
+
+  const geaAll =
+    document.getElementById(
+      "billViewGeaAll"
+    );
+
+  if (geaAll) {
+
+    geaAll.textContent =
+      formatPHP(
+        bill.geaAll
+      );
+
+  }
+
+
+  // =====================================
+  // LIFELINE
+  // =====================================
+
+  const lifeline =
+    document.getElementById(
+      "billViewLifeline"
+    );
+
+  if (lifeline) {
+
+    lifeline.textContent =
+      formatPHP(
+        bill.lifeline
+      );
+
+  }
+
+
+  // =====================================
+  // OTHER CHARGES
+  // =====================================
+
+  const otherCharges =
+    document.getElementById(
+      "billViewOtherCharges"
+    );
+
+  if (otherCharges) {
+
+    otherCharges.textContent =
+      formatPHP(
+        bill.otherCharges
+      );
+
+  }
+
+
+  // =====================================
+  // TOTAL ADDITIONAL CHARGES
+  // =====================================
+
+  const totalAdditionalCharges =
+    Number(bill.transmission || 0) +
+    Number(bill.systemLoss || 0) +
+    Number(bill.distribution || 0) +
+    Number(bill.seniorCitizen || 0) +
+    Number(bill.governmentTaxes || 0) +
+    Number(bill.universalCharges || 0) +
+    Number(bill.fitAll || 0) +
+    Number(bill.geaAll || 0) +
+    Number(bill.lifeline || 0) +
+    Number(bill.otherCharges || 0);
+
+
+  const totalElement =
+    document.getElementById(
+      "billViewTotalAdditionalCharges"
+    );
+
+  if (totalElement) {
+
+    totalElement.textContent =
+      formatPHP(
+        totalAdditionalCharges
+      );
+
+  }
+
+
+  // =====================================
+  // TOTAL ACTUAL BILL
+  // =====================================
+
+  const amount =
+    document.getElementById(
       "billViewAmount"
-    )
-    .textContent =
-    formatPHP(
-      bill.actualBill
+    );
+
+  if (amount) {
+
+    amount.textContent =
+      formatPHP(
+        bill.actualBill
+      );
+
+  }
+
+
+  // =====================================
+  // RATE
+  // =====================================
+
+  const rate =
+    document.getElementById(
+      "billViewRate"
+    );
+
+  if (rate) {
+
+    rate.textContent =
+      formatPHP(
+        bill.ratePerKwh
+      ) +
+      " / kWh";
+
+  }
+
+
+  // =====================================
+  // DIFFERENCE VS ESTIMATE - KWH
+  // =====================================
+
+  const differenceKwh =
+    document.getElementById(
+      "billViewDifferenceKwh"
+    );
+
+  if (differenceKwh) {
+
+    differenceKwh.textContent =
+      formatNumber(
+        bill.differenceVsEstimateKwh,
+        2
+      ) +
+      " kWh";
+
+  }
+
+
+  // =====================================
+  // DIFFERENCE VS ESTIMATE - COST
+  // =====================================
+
+  const differenceCost =
+    document.getElementById(
+      "billViewDifferenceCost"
+    );
+
+  if (differenceCost) {
+
+    differenceCost.textContent =
+      formatPHP(
+        bill.differenceVsEstimateCost
+      );
+
+  }
+
+
+  // =====================================
+  // NOTES
+  // =====================================
+
+  const notes =
+    document.getElementById(
+      "billViewMessage"
+    );
+
+  if (notes) {
+
+    notes.textContent =
+      bill.notes || "";
+
+  }
+
+
+  // =====================================
+  // EDIT INPUTS
+  // =====================================
+
+  const editValues = {
+
+    editGeneration:
+      bill.generation,
+
+    editTransmission:
+      bill.transmission,
+
+    editSystemLoss:
+      bill.systemLoss,
+
+    editDistribution:
+      bill.distribution,
+
+    editSeniorCitizen:
+      bill.seniorCitizen,
+
+    editGovernmentTaxes:
+      bill.governmentTaxes,
+
+    editUniversalCharges:
+      bill.universalCharges,
+
+    editFitAll:
+      bill.fitAll,
+
+    editGeaAll:
+      bill.geaAll,
+
+    editLifeline:
+      bill.lifeline,
+
+    editOtherCharges:
+      bill.otherCharges
+
+  };
+
+
+  Object.keys(editValues)
+    .forEach(
+      function(id) {
+
+        const input =
+          document.getElementById(
+            id
+          );
+
+        if (input) {
+
+          input.value =
+            Number(
+              editValues[id] || 0
+            );
+
+        }
+
+      }
     );
 
 
-
-  document
-    .getElementById(
-      "billViewKwh"
-    )
-    .textContent =
-    formatNumber(
-      bill.actualKwh,
-      2
-    )
-    +
-    " kWh";
-
-
-
-  document
-.getElementById(
-"billViewGeneration"
-)
-.textContent =
-formatPHP(
-bill.generation
-);
-
-
-
-  document.getElementById("billViewTransmission").textContent = formatPHP(bill.transmission);
-
-
-
-  document.getElementById("billViewSystemLoss").textContent = formatPHP(bill.systemLoss);
-
-
-
-  document.getElementById("billViewDistribution").textContent = formatPHP(bill.distribution);
-
-
-
-  document.getElementById("billViewGovernmentTaxes").textContent = formatPHP(bill.governmentTaxes);
-
-document.getElementById("billViewUniversalCharges").textContent = formatPHP(bill.universalCharges);
-
-document.getElementById("billViewFitAll").textContent = formatPHP(bill.fitAll);
-
-document.getElementById("billViewGeaAll").textContent = formatPHP(bill.geaAll);
-
-document.getElementById("billViewLifeline").textContent = formatPHP(bill.lifeline);
-
-document.getElementById("billViewOtherCharges").textContent = formatPHP(bill.otherCharges);
-
-
-
-  document
-    .getElementById(
-      "billViewMessage"
-    )
-    .textContent =
-    bill.notes || "";
-
-// Fill edit fields
-document.getElementById("editGeneration").value = bill.generation || 0;
-document.getElementById("editTransmission").value = bill.transmission || 0;
-document.getElementById("editSystemLoss").value = bill.systemLoss || 0;
-document.getElementById("editDistribution").value = bill.distribution || 0;
-document.getElementById("editSeniorCitizen").value = bill.seniorCitizen || 0;
-document.getElementById("editGovernmentTaxes").value = bill.governmentTaxes || 0;
-document.getElementById("editUniversalCharges").value = bill.universalCharges || 0;
-document.getElementById("editFitAll").value = bill.fitAll || 0;
-document.getElementById("editGeaAll").value = bill.geaAll || 0;
-document.getElementById("editLifeline").value = bill.lifeline || 0;
-document.getElementById("editOtherCharges").value = bill.otherCharges || 0;
-
 }
-
-
 
 
 function changeBillMonth(){
@@ -4420,7 +4810,8 @@ if(loadingOverlay){
       function(item){
 
         return (
-          item.month === selectedMonth
+          String(item.month || "").trim() ===
+          String(selectedMonth || "").trim()
         );
 
       }
@@ -4543,14 +4934,6 @@ if(loadingOverlay){
 
     .then(function(result){
 
-        if(loadingOverlay){
-
-  loadingOverlay.classList.add(
-    "hidden"
-  );
-
-}
-
         console.log(
           "UPDATE RESULT:",
           result
@@ -4655,9 +5038,24 @@ if(loadingOverlay){
         ).style.display =
           "none";
 
-        showToast(
-          "Bill updated successfully."
-        );
+        if(loadingText){
+
+          loadingText.textContent =
+            "Bill updated successfully";
+
+        }
+
+        setTimeout(function(){
+
+          if(loadingOverlay){
+
+            loadingOverlay.classList.add(
+              "hidden"
+            );
+
+          }
+
+        }, 1500);
 
       })
 
@@ -5045,3 +5443,951 @@ console.log(
 }
 
 
+
+
+/*******************************************************
+ * PASSWORD RESET UI
+ *******************************************************/
+
+
+function openResetPassword() {
+
+  const modal =
+    document.getElementById(
+      "resetPasswordModal"
+    );
+
+  if (modal) {
+
+    modal.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  const email =
+    document.getElementById(
+      "userEmail"
+    );
+
+
+  const resetEmail =
+    document.getElementById(
+      "resetEmail"
+    );
+
+
+  if (
+    email &&
+    resetEmail
+  ) {
+
+    resetEmail.value =
+      email.value;
+
+  }
+
+}
+
+
+
+function closeResetPassword() {
+
+  const modal =
+    document.getElementById(
+      "resetPasswordModal"
+    );
+
+  if (modal) {
+
+    modal.classList.add(
+      "hidden"
+    );
+
+  }
+
+}
+
+
+
+async function submitResetPassword() {
+
+  const email =
+    document.getElementById(
+      "resetEmail"
+    )
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const code =
+    document.getElementById(
+      "resetCode"
+    )
+    .value
+    .trim();
+
+
+  const newPassword =
+    document.getElementById(
+      "resetNewPassword"
+    )
+    .value
+    .trim();
+
+
+  const message =
+    document.getElementById(
+      "resetPasswordMessage"
+    );
+
+
+  const resetButton =
+    document.getElementById(
+      "resetPasswordButton"
+    );
+
+
+  /*
+   * VALIDATE FIELDS FIRST
+   */
+
+  if (!email || !code || !newPassword) {
+
+    message.innerText =
+      "Please complete all fields.";
+
+    message.classList.add(
+      "show"
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * SHOW LOADING ON BUTTON
+   */
+
+  if (resetButton) {
+
+    resetButton.disabled = true;
+
+    resetButton.innerText =
+      "Password is being reset...";
+
+  }
+
+
+  message.classList.remove("show");
+  message.innerText = "";
+
+
+  try {
+
+
+    const result =
+      await apiCall(
+        "resetPassword",
+        {
+          email: email,
+          code: code,
+          newPassword: newPassword
+        }
+      );
+
+
+    /*
+     * RESTORE BUTTON
+     */
+
+    if (resetButton) {
+
+      resetButton.disabled = false;
+
+      resetButton.innerText =
+        "Reset Password";
+
+    }
+
+
+    /*
+     * SUCCESS
+     */
+
+    if (
+      result &&
+      result.success
+    ) {
+
+      message.innerText =
+        "Password updated successfully.";
+
+      message.classList.add(
+        "show"
+      );
+
+
+      setTimeout(
+        function() {
+
+          closeResetPassword();
+
+        },
+        2000
+      );
+
+
+    } else {
+
+
+      /*
+       * SERVER ERROR
+       */
+
+      message.innerText =
+        result.message ||
+        "Unable to reset password.";
+
+      message.classList.add(
+        "show"
+      );
+
+    }
+
+
+  } catch(error) {
+
+
+    /*
+     * RESTORE BUTTON ON ERROR
+     */
+
+    if (resetButton) {
+
+      resetButton.disabled = false;
+
+      resetButton.innerText =
+        "Reset Password";
+
+    }
+
+
+    message.innerText =
+      error.message;
+
+    message.classList.add(
+      "show"
+    );
+
+  }
+
+}
+
+
+/*******************************************************
+ * SEND PASSWORD RESET CODE
+ *******************************************************/
+
+
+async function sendResetCode() {
+
+  const email =
+    document.getElementById(
+      "resetEmail"
+    )
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const message =
+    document.getElementById(
+      "resetPasswordMessage"
+    );
+
+
+  const sendButton =
+    document.getElementById(
+      "sendResetCodeButton"
+    );
+
+
+  /*
+   * VALIDATE EMAIL FIRST
+   */
+
+  if (!email) {
+
+    message.innerText =
+      "Please enter your email.";
+
+    message.classList.add(
+      "show"
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * CHANGE BUTTON TEXT
+   */
+
+  if (sendButton) {
+
+    sendButton.disabled = true;
+
+    sendButton.innerText =
+      "Sending Code to Your Email...";
+
+  }
+
+
+  message.classList.remove("show");
+  message.innerText = "";
+
+
+  try {
+
+    const result =
+      await apiCall(
+        "requestPasswordReset",
+        {
+          email: email
+        }
+      );
+
+
+    /*
+     * RESTORE BUTTON
+     */
+
+    if (sendButton) {
+
+      sendButton.disabled = false;
+
+      sendButton.innerText =
+        "Send Reset Code";
+
+    }
+
+
+    /*
+     * SUCCESS
+     */
+
+    if (
+      result &&
+      result.success
+    ) {
+
+      message.innerText =
+        "Reset code generated. Check your reset code.";
+
+      message.classList.add(
+        "show"
+      );
+
+
+      console.log(
+        "RESET CODE:",
+        result.code
+      );
+
+
+    } else {
+
+      message.innerText =
+        result.message ||
+        "Unable to generate reset code.";
+
+      message.classList.add(
+        "show"
+      );
+
+    }
+
+
+  } catch(error) {
+
+
+    /*
+     * RESTORE BUTTON ON ERROR
+     */
+
+    if (sendButton) {
+
+      sendButton.disabled = false;
+
+      sendButton.innerText =
+        "Send Reset Code";
+
+    }
+
+
+    message.innerText =
+      error.message;
+
+    message.classList.add(
+      "show"
+    );
+
+  }
+
+}
+
+
+/*******************************************************
+ * PASSWORD VISIBILITY TOGGLE
+ *******************************************************/
+
+function togglePasswordVisibility() {
+
+  const password =
+    document.getElementById(
+      "userPassword"
+    );
+
+
+  const icon =
+    document.getElementById(
+      "passwordToggleIcon"
+    );
+
+
+  if (!password || !icon) {
+    return;
+  }
+
+
+  if (password.type === "password") {
+
+    password.type = "text";
+
+    icon.src =
+      "assets/Open.png";
+
+
+  } else {
+
+    password.type = "password";
+
+    icon.src =
+      "assets/Close.png";
+
+  }
+
+}
+
+
+
+
+/* =====================================================
+   REGISTRATION
+   ===================================================== */
+
+function openRegister() {
+
+  const modal =
+    document.getElementById(
+      'registerModal'
+    );
+
+  if (!modal) {
+
+    alert(
+      'Registration modal not found.'
+    );
+
+    return;
+
+  }
+
+  modal.classList.remove(
+    'hidden'
+  );
+
+}
+
+
+function closeRegister() {
+
+  const modal =
+    document.getElementById(
+      'registerModal'
+    );
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.add(
+    'hidden'
+  );
+
+}
+
+
+function submitRegister(event) {
+
+  if (event) {
+    event.preventDefault();
+  }
+
+
+  const name =
+    document
+      .getElementById(
+        'registerName'
+      )
+      .value
+      .trim();
+
+
+  const email =
+    document
+      .getElementById(
+        'registerEmail'
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const password =
+    document
+      .getElementById(
+        'registerPassword'
+      )
+      .value;
+
+
+  const householdName =
+    document
+      .getElementById(
+        'registerHousehold'
+      )
+      .value
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      'registerMessage'
+    );
+
+
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !householdName
+  ) {
+
+    if (message) {
+      message.textContent =
+        'All fields are required.';
+    }
+
+    return;
+  }
+
+
+  if (!isValidEmail(email)) {
+
+    if (message) {
+      message.textContent =
+        'Please enter a valid email address.';
+    }
+
+    return;
+  }
+
+
+  if (message) {
+    message.textContent =
+      'Creating your WattWise account...';
+  }
+
+
+  const buttons =
+    document.querySelectorAll(
+      '#registerModal button'
+    );
+
+
+  buttons.forEach(
+    function(button) {
+      button.disabled = true;
+    }
+  );
+
+
+  registerUser(
+    email,
+    password,
+    name,
+    householdName
+  )
+
+    .then(
+      function(result) {
+
+        console.log(
+          'Registration result:',
+          result
+        );
+
+
+        if (
+          !result ||
+          !result.success
+        ) {
+
+          if (message) {
+            message.textContent =
+              result &&
+              result.message
+                ? result.message
+                : 'Unable to create account.';
+          }
+
+
+          buttons.forEach(
+            function(button) {
+              button.disabled = false;
+            }
+          );
+
+          return;
+        }
+
+
+        if (message) {
+          message.textContent =
+            'Account created successfully! You can now log in.';
+        }
+
+
+        /*
+         * Put the newly registered email
+         * into the login form.
+         */
+
+        const loginEmail =
+          document.getElementById(
+            'userEmail'
+          );
+
+
+        if (loginEmail) {
+          loginEmail.value =
+            email;
+        }
+
+
+        /*
+         * Clear the registration form.
+         */
+
+        document
+          .getElementById(
+            'registerName'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'registerEmail'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'registerPassword'
+          )
+          .value = '';
+
+
+        document
+          .getElementById(
+            'registerHousehold'
+          )
+          .value = '';
+
+
+        /*
+         * Close registration modal
+         * after a short delay.
+         */
+
+        setTimeout(
+          function() {
+
+            closeRegister();
+
+            if (message) {
+              message.textContent = '';
+            }
+
+
+            buttons.forEach(
+              function(button) {
+                button.disabled = false;
+              }
+            );
+
+          },
+          1200
+        );
+
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        console.error(
+          'Registration failed:',
+          error
+        );
+
+
+        if (message) {
+          message.textContent =
+            getErrorMessage(error);
+        }
+
+
+        buttons.forEach(
+          function(button) {
+            button.disabled = false;
+          }
+        );
+
+      }
+    );
+
+}
+
+
+
+
+
+
+function deleteCurrentBill(){
+
+  console.log(
+    "DELETE BILL FIRED"
+  );
+
+
+  const dropdown =
+    document.getElementById(
+      "billMonthDropdown"
+    );
+
+
+  if(!dropdown){
+
+    showToast(
+      "Unable to identify the selected bill."
+    );
+
+    return;
+
+  }
+
+
+  const selectedMonth =
+    String(
+      dropdown.value || ""
+    ).trim();
+
+
+  const bill =
+    APP.actualBills.find(
+      function(item){
+
+        return (
+          String(
+            item.month || ""
+          ).trim()
+          ===
+          selectedMonth
+        );
+
+      }
+    );
+
+
+  console.log(
+    "BILL TO DELETE:",
+    bill
+  );
+
+
+  if(!bill){
+
+    showToast(
+      "Unable to find the selected bill."
+    );
+
+    return;
+
+  }
+
+
+  if(!bill.billId){
+
+    showToast(
+      "Bill ID is missing."
+    );
+
+    return;
+
+  }
+
+
+  const loadingOverlay =
+    document.querySelector(
+      ".loading-overlay"
+    );
+
+
+  const loadingText =
+    document.getElementById(
+      "loadingText"
+    );
+
+
+  if(loadingText){
+
+    loadingText.textContent =
+      "Deleting bill...";
+
+  }
+
+
+  if(loadingOverlay){
+
+    loadingOverlay.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  deleteSavedBill(
+    APP.userId,
+    bill.billId
+  )
+
+  .then(function(result){
+
+    console.log(
+      "DELETE RESULT:",
+      result
+    );
+
+
+    if(
+      !result ||
+      !result.success
+    ){
+
+      if(loadingOverlay){
+
+        loadingOverlay.classList.add(
+          "hidden"
+        );
+
+      }
+
+
+      showToast(
+        result &&
+        result.message
+          ? result.message
+          : "Unable to delete bill."
+      );
+
+      return;
+
+    }
+
+
+    if(loadingText){
+
+      loadingText.textContent =
+        "Bill deleted successfully";
+
+    }
+
+
+    APP.actualBills =
+      APP.actualBills.filter(
+        function(item){
+
+          return (
+            String(
+              item.billId || ""
+            ).trim()
+            !==
+            String(
+              bill.billId
+            ).trim()
+          );
+
+        }
+      );
+
+
+    setTimeout(function(){
+
+      populateBillMonths();
+
+      if(loadingOverlay){
+
+        loadingOverlay.classList.add(
+          "hidden"
+        );
+
+      }
+
+    }, 1500);
+
+
+  })
+
+  .catch(function(error){
+
+    console.error(
+      "DELETE BILL ERROR:",
+      error
+    );
+
+
+    if(loadingOverlay){
+
+      loadingOverlay.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    showToast(
+      getErrorMessage(error)
+    );
+
+  });
+
+}
