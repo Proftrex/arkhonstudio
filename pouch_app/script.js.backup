@@ -119,56 +119,7 @@ function detectDevice() {
 }
 
 window.addEventListener("load", function() {
-
   detectDevice();
-
-
-  /*
-   * RESTORE LOGIN SESSION
-   */
-
-  const savedSession =
-    localStorage.getItem("pouchSession");
-
-
-  if(savedSession){
-
-    window.loggedInUser =
-      JSON.parse(savedSession);
-
-
-    const loginScreen =
-      document.getElementById("loginScreen");
-
-
-    const mainApp =
-      document.getElementById("mainApp");
-
-
-    if(loginScreen){
-
-      loginScreen.style.display =
-        "none";
-
-    }
-
-
-    if(mainApp){
-
-      mainApp.style.display =
-        "flex";
-
-    }
-
-
-    setTimeout(function(){
-
-      loadDashboard();
-
-    },100);
-
-  }
-
 });
 
 detectDevice();
@@ -810,107 +761,10 @@ function closeWithdrawalModal(){
    CRYPTO MODAL
 ========================= */
 
-
-
-function loadCryptoDropdown(){
-
-  callAppsScript(
-    "getCryptoList",
-    []
-  )
-
-  .then(function(response){
-
-
-    console.log(
-      "CRYPTO RESPONSE:",
-      response
-    );
-
-
-    const coins =
-      response.data || response;
-
-
-
-    const dropdown =
-      document.getElementById(
-        "cryptoName"
-      );
-
-
-    if(!dropdown){
-
-      console.error(
-        "cryptoName dropdown not found"
-      );
-
-      return;
-
-    }
-
-
-
-    dropdown.innerHTML =
-    `
-    <option value="">
-      Select Cryptocurrency
-    </option>
-    `;
-
-
-
-    if(!Array.isArray(coins)){
-
-      console.error(
-        "Crypto list is not an array:",
-        coins
-      );
-
-      return;
-
-    }
-
-
-
-    coins.forEach(function(coin){
-
-
-      dropdown.innerHTML +=
-      `
-      <option value="${coin.name} (${coin.symbol})">
-        ${coin.name} (${coin.symbol})
-      </option>
-      `;
-
-
-    });
-
-
-  })
-
-
-  .catch(function(error){
-
-    console.error(
-      "Crypto dropdown error:",
-      error
-    );
-
-  });
-
-
-}
-
-
-
 function openCryptoModal(){
 
   document.getElementById("cryptoModal")
   .style.display = "flex";
-
-
-  loadCryptoDropdown();
 
 }
 
@@ -967,38 +821,6 @@ function openStockModal(){
   document.getElementById("stockModal")
   .style.display = "flex";
 
-  loadStockDropdown();
-
-}
-
-
-function loadStockDropdown(){
-
-  const dropdown =
-    document.getElementById("stockName");
-
-
-  if(!dropdown) return;
-
-
-  dropdown.innerHTML =
-    "<option value=''>Select Stock</option>";
-
-
-  assets.Stocks.forEach(function(stock){
-
-    const option =
-      document.createElement("option");
-
-
-    option.value = stock;
-    option.textContent = stock;
-
-
-    dropdown.appendChild(option);
-
-  });
-
 }
 
 
@@ -1044,34 +866,12 @@ const assets = {
   Stocks: [
     "Apple",
     "Microsoft",
+    "Netflix",
+    "Tesla",
     "Nvidia",
     "Amazon",
     "Meta",
-    "Alphabet (Google)",
-    "Tesla",
-    "Netflix",
-    "Adobe",
-    "AMD",
-    "Intel",
-    "Broadcom",
-    "Oracle",
-    "Salesforce",
-    "JPMorgan Chase",
-    "Bank of America",
-    "Visa",
-    "Mastercard",
-    "Walmart",
-    "Costco",
-    "Coca-Cola",
-    "PepsiCo",
-    "McDonald's",
-    "Nike",
-    "Disney",
-    "Berkshire Hathaway",
-    "Johnson & Johnson",
-    "Procter & Gamble",
-    "Exxon Mobil",
-    "Chevron"
+    "Google"
   ]
 
 };
@@ -1138,9 +938,7 @@ function editLoan(id){
 
       if(!loan){
 
-        showTransactionError(
-          "Loan not found."
-        );
+        alert("Loan not found.");
 
         return;
 
@@ -1208,20 +1006,6 @@ function editLoan(id){
       }
 
 
-      const button =
-        document.getElementById(
-          "loanSaveButton"
-        );
-
-
-      if(button){
-
-        button.textContent =
-          "Update Loan";
-
-      }
-
-
 
       // Open modal
 
@@ -1280,9 +1064,7 @@ function submitTransaction() {
     data.buyPrice <= 0
   ) {
 
-    showTransactionError(
-      "Please complete all transaction details."
-    );
+    alert("Please complete all transaction details.");
     return;
 
   }
@@ -1302,15 +1084,11 @@ function submitTransaction() {
           response.result !== "success"
         )
       ){
-        showTransactionError(
-        response.message
-      );
+        alert(response.message);
         return;
       }
 
-      showTransactionSuccess(
-        "Transaction saved successfully."
-      );
+      alert("Transaction Saved");
 
       closeModal();
 
@@ -1320,6 +1098,8 @@ function submitTransaction() {
 
       loadDashboard();
 
+      loadCryptocurrenciesDashboard();
+
     }
 
   )
@@ -1327,9 +1107,7 @@ function submitTransaction() {
 
       console.error(error);
 
-      showTransactionError(
-        "Transaction failed."
-      );
+      alert("Transaction failed.");
 
     }
 
@@ -1634,17 +1412,7 @@ function deleteTransaction(id, type){
 
 }
 
-let dashboardLoading = false;
-
-
 function loadDashboard() {
-
-  if(dashboardLoading){
-    console.log("Dashboard load skipped - already loading");
-    return;
-  }
-
-  dashboardLoading = true;
 
   showDashboardLoading();
 
@@ -1677,7 +1445,6 @@ function loadDashboard() {
     renderDashboard(data);
 
 
-
     loadDashboardSavings();
 
 
@@ -1692,11 +1459,6 @@ function loadDashboard() {
       "========== DASHBOARD ERROR ==========",
       error
     );
-
-  })
-  .finally(function(){
-
-    dashboardLoading = false;
 
   });
 
@@ -2144,11 +1906,6 @@ function renderDashboard(data) {
       (value >= 0 ? "+" : "") +
       formatPeso(value);
 
-    pnl.className =
-      value >= 0
-      ? "positive"
-      : "negative";
-
   }
 
 
@@ -2159,18 +1916,12 @@ function renderDashboard(data) {
 
   if (pnlPercentage) {
 
-    const percentage =
-      Number(
-        data.summary?.pnlPercentage
-      ) || 0;
-
     pnlPercentage.textContent =
-      percentage.toFixed(2) + "%";
-
-    pnlPercentage.className =
-      percentage >= 0
-      ? "positive"
-      : "negative";
+      (
+        Number(
+          data.summary?.pnlPercentage
+        ) || 0
+      ).toFixed(2) + "%";
 
   }
 
@@ -2435,34 +2186,6 @@ function renderDashboard(data) {
 
 
 
-
-
-function renderPortfolioHoldings(portfolio){
-
-  const container =
-    document.getElementById("portfolioCards");
-
-  if(!container) return;
-
-  container.innerHTML = "";
-
-  (portfolio || []).forEach(function(asset){
-
-    container.innerHTML += `
-      <div class="asset-card">
-        <h3>${asset.assetName}</h3>
-        <p>Type: ${asset.assetType}</p>
-        <p>Quantity: ${Number(asset.quantity).toLocaleString()}</p>
-        <p>Current Value: ${formatPeso(asset.currentValue || 0)}</p>
-        <p class="${asset.pnl >= 0 ? "positive" : "negative"}">
-          P&L: ${asset.pnl >= 0 ? "+" : ""}${formatPeso(asset.pnl || 0)}
-        </p>
-      </div>
-    `;
-
-  });
-
-}
 
 function loadDashboardSavings() {
 
@@ -3178,9 +2901,7 @@ function submitSavings(){
     data.amount <= 0
   ){
 
-    showTransactionError(
-      "Please complete savings details."
-    );
+    alert("Please complete savings details.");
 
     return;
 
@@ -3230,9 +2951,7 @@ function submitSavings(){
 
 
     // SHOW SUCCESS MODAL
-    showTransactionSuccess(
-      "Savings saved successfully."
-    );
+    showTransactionSuccess();
 
 
 
@@ -3307,9 +3026,7 @@ function submitWithdrawal(){
     !data.date
   ){
 
-    showTransactionError(
-      "Please select withdrawal date."
-    );
+    alert("Please select withdrawal date.");
     return;
 
   }
@@ -3319,9 +3036,7 @@ function submitWithdrawal(){
     !data.mode
   ){
 
-    showTransactionError(
-      "Please select withdrawal mode."
-    );
+    alert("Please select withdrawal mode.");
     return;
 
   }
@@ -3332,9 +3047,7 @@ function submitWithdrawal(){
     !data.bank
   ){
 
-    showTransactionError(
-      "Please select bank/wallet."
-    );
+    alert("Please select bank/wallet.");
     return;
 
   }
@@ -3344,7 +3057,7 @@ function submitWithdrawal(){
     data.amount <= 0 || isNaN(data.amount)
   ){
 
-    showTransactionError(
+    alert(
       "Withdrawal amount must be greater than zero."
     );
 
@@ -3402,9 +3115,7 @@ function submitWithdrawal(){
 
 
     // SHOW SUCCESS MODAL
-    showTransactionSuccess(
-      "Withdrawal saved successfully."
-    );
+    showTransactionSuccess();
 
 
 
@@ -3486,9 +3197,7 @@ function submitCrypto(){
     data.buyPrice <= 0
   ){
 
-    showTransactionError(
-      "Please complete cryptocurrency details."
-    );
+    alert("Please complete cryptocurrency details.");
 
     return;
 
@@ -3535,11 +3244,11 @@ function submitCrypto(){
 
 
     // SHOW SUCCESS MODAL
-    showTransactionSuccess(
-      "Transaction saved successfully."
-    );
+    showTransactionSuccess();
 
 
+
+    loadCryptocurrenciesDashboard();
 
     loadTransactions();
 
@@ -3632,7 +3341,7 @@ function submitCommodity(){
     data.buyPrice <= 0
   ){
 
-    showTransactionError(
+    alert(
       "Please complete commodity details."
     );
 
@@ -3691,9 +3400,7 @@ function submitCommodity(){
 
     // SHOW SUCCESS MODAL
 
-    showTransactionSuccess(
-      "Commodity saved successfully."
-    );
+    showTransactionSuccess();
 
 
 
@@ -3788,7 +3495,7 @@ function submitStock(){
     data.buyPrice <= 0
   ){
 
-    showTransactionError(
+    alert(
       "Please complete stock details."
     );
 
@@ -3847,9 +3554,7 @@ function submitStock(){
 
     // SHOW SUCCESS MODAL
 
-    showTransactionSuccess(
-      "Stock saved successfully."
-    );
+    showTransactionSuccess();
 
 
 
@@ -4380,7 +4085,7 @@ function submitBond(){
     data.apy <= 0
   ){
 
-    showTransactionError(
+    alert(
       "Please complete all bond details."
     );
 
@@ -4439,9 +4144,7 @@ function submitBond(){
 
     // SHOW SUCCESS CARD
 
-    showTransactionSuccess(
-      "Bond saved successfully."
-    );
+    showTransactionSuccess();
 
 
 
@@ -4805,9 +4508,7 @@ function claimBond(bondId){
     }
 
 
-    showTransactionSuccess(
-      "Bond claimed successfully."
-    );
+    showTransactionSuccess();
 
     loadBonds();
 
@@ -4986,22 +4687,9 @@ function loadBondTransactions(){
 
 function deleteBondTransaction(id){
 
-
-  openDeleteConfirm(
-    "Delete this bond transaction?",
-    function(){
-
-      executeDeleteBondTransaction(id);
-
-    }
-  );
-
-
-}
-
-
-
-function executeDeleteBondTransaction(id){
+  if(!confirm("Delete this bond transaction?")){
+    return;
+  }
 
 
   console.log(
@@ -5548,96 +5236,79 @@ function loadStablecoinSummary(){
 
   .then(function(data){
 
+
     data = data || {};
 
 
-    const investedEl =
+    const valueEl =
       document.getElementById(
-        "stablecoinTotalInvested"
+        "stablecoinTotalValue"
       );
 
 
-    if(investedEl){
+    if(valueEl){
 
-      investedEl.innerHTML =
+      valueEl.innerHTML =
         formatPeso(
-          data.totalInvested || 0
+          data.totalValue || 0
         );
 
     }
 
 
 
-    const currentEl =
+    const quantityEl =
       document.getElementById(
-        "stablecoinCurrentValue"
+        "stablecoinTotalQuantity"
       );
 
 
-    if(currentEl){
+    if(quantityEl){
 
-      currentEl.innerHTML =
-        formatPeso(
-          data.currentValue || 0
-        );
+      quantityEl.innerHTML =
+        Number(
+          data.totalQuantity || 0
+        ).toLocaleString();
 
     }
 
 
 
-    const pnlEl =
+    const countEl =
       document.getElementById(
-        "stablecoinTotalPnL"
+        "stablecoinCount"
       );
 
 
-    if(pnlEl){
+    if(countEl){
 
-      const pnl =
-        Number(data.pnl || 0);
-
-
-      pnlEl.innerHTML =
-        (pnl >= 0 ? "+" : "") +
-        formatPeso(pnl);
-
-
-      pnlEl.className =
-        pnl >= 0
-        ? "positive"
-        : "negative";
-
-    }
-
-
-
-    const assetsEl =
-      document.getElementById(
-        "stablecoinAssets"
-      );
-
-
-    if(assetsEl){
-
-      assetsEl.innerHTML =
+      countEl.innerHTML =
         data.count || 0;
 
     }
 
 
-  })
 
-  .catch(function(error){
+    const updatedEl =
+      document.getElementById(
+        "stablecoinLastUpdated"
+      );
 
-    console.error(
-      "Stablecoin Summary Error:",
-      error
-    );
+
+    if(updatedEl){
+
+      updatedEl.innerHTML =
+        new Date()
+        .toLocaleDateString();
+
+    }
+
 
   });
 
 
 }
+
 
 
 
@@ -5709,12 +5380,6 @@ function saveStablecoin(){
       ).value,
 
 
-    transactionType:
-      document.getElementById(
-        "stablecoinTransactionType"
-      ).value,
-
-
     stablecoin:
       document.getElementById(
         "stablecoinName"
@@ -5744,7 +5409,7 @@ function saveStablecoin(){
 
   if(!data.stablecoin){
 
-    showTransactionError(
+    alert(
       "Please enter stablecoin name."
     );
 
@@ -5752,13 +5417,6 @@ function saveStablecoin(){
 
   }
 
-
-
-  console.log("STABLECOIN LOADING TRIGGERED");
-
-  showTransactionLoading(
-    "Saving stablecoin..."
-  );
 
 
   callAppsScript(
@@ -5773,7 +5431,7 @@ function saveStablecoin(){
 
 
       showTransactionSuccess(
-        "Stablecoin saved successfully."
+        "Stablecoin saved!"
       );
 
 
@@ -6213,90 +5871,6 @@ function closeTransactionModal(){
 
 
 
-/* =========================
-   DELETE CONFIRMATION
-========================= */
-
-let pendingDeleteAction = null;
-
-
-function openDeleteConfirm(message, callback){
-
-  pendingDeleteAction = callback;
-
-
-  const messageEl =
-    document.getElementById(
-      "deleteConfirmMessage"
-    );
-
-
-  if(messageEl){
-
-    messageEl.textContent =
-      message;
-
-  }
-
-
-  const modal =
-    document.getElementById(
-      "deleteConfirmModal"
-    );
-
-
-  if(modal){
-
-    modal.style.display =
-      "flex";
-
-  }
-
-}
-
-
-
-function closeDeleteConfirm(){
-
-  pendingDeleteAction = null;
-
-
-  const modal =
-    document.getElementById(
-      "deleteConfirmModal"
-    );
-
-
-  if(modal){
-
-    modal.style.display =
-      "none";
-
-  }
-
-}
-
-
-
-function executeDeleteConfirm(){
-
-  const action =
-    pendingDeleteAction;
-
-
-  closeDeleteConfirm();
-
-
-  if(action){
-
-    action();
-
-  }
-
-}
-
-
-
 function showTransactionLoading(text = "Loading transaction..."){
 
 
@@ -6312,23 +5886,7 @@ function showTransactionLoading(text = "Loading transaction..."){
 
     "loanModal",
 
-    "loanPaymentModal",
-
-    "stablecoinModal",
-
-    "transactionInputModal",
-
-    "commodityModal",
-
-    "stockModal",
-
-    "bondModal",
-
-    "cryptoModal",
-
-    "creditCardModal",
-
-    "creditCardPaymentModal"
+    "transactionInputModal"
 
   ];
 
@@ -6839,12 +6397,6 @@ function loginUser(){
       };
 
 
-      localStorage.setItem(
-        "pouchSession",
-        JSON.stringify(window.loggedInUser)
-      );
-
-
       document
         .getElementById("loginScreen")
         .style.display = "none";
@@ -7287,7 +6839,7 @@ function submitPersonalIncome(){
     isNaN(data.amount)
   ){
 
-    showTransactionError(
+    alert(
       "Please complete the personal income details."
     );
 
@@ -7883,7 +7435,7 @@ function submitBusinessIncome(){
     amount <= 0
   ){
 
-    showTransactionError(
+    alert(
       "Please complete the date, business, and amount."
     );
 
@@ -8394,20 +7946,6 @@ function openCreditCardModal(){
 window.editingCreditCardId = "";
 
 
-  const button =
-    document.getElementById(
-      "creditCardSaveButton"
-    );
-
-
-  if(button){
-
-    button.textContent =
-      "Save Credit Card";
-
-  }
-
-
   const modal =
     document.getElementById(
       "creditCardModal"
@@ -8532,7 +8070,7 @@ function submitCreditCard(){
         
         else{
 
-          showTransactionError(
+          alert(
             response.message
           );
 
@@ -8596,7 +8134,7 @@ function submitCreditCard(){
       }
       else{
 
-        showTransactionError(
+        alert(
           response.message
         );
 
@@ -8964,20 +8502,6 @@ function openLoanModal(){
   window.editingLoanId = "";
 
 
-  const button =
-    document.getElementById(
-      "loanSaveButton"
-    );
-
-
-  if(button){
-
-    button.textContent =
-      "Save Loan";
-
-  }
-
-
   const title =
     document.querySelector(
       "#loanModal h2"
@@ -9093,7 +8617,7 @@ function submitLoan(){
 
   if(!loanName){
 
-    showTransactionError(
+    alert(
       "Please enter the loan name."
     );
 
@@ -9104,7 +8628,7 @@ function submitLoan(){
 
   if(!loanType){
 
-    showTransactionError(
+    alert(
       "Please select a loan type."
     );
 
@@ -9115,7 +8639,7 @@ function submitLoan(){
 
   if(!loanDate){
 
-    showTransactionError(
+    alert(
       "Please select the loan date."
     );
 
@@ -9126,7 +8650,7 @@ function submitLoan(){
 
   if(originalAmount <= 0){
 
-    showTransactionError(
+    alert(
       "Please enter a valid original loan amount."
     );
 
@@ -9137,7 +8661,7 @@ function submitLoan(){
 
   if(outstandingBalance < 0){
 
-    showTransactionError(
+    alert(
       "Outstanding balance cannot be negative."
     );
 
@@ -9151,7 +8675,7 @@ function submitLoan(){
     originalAmount
   ){
 
-    showTransactionError(
+    alert(
       "Outstanding balance cannot be greater than the original loan amount."
     );
 
@@ -9347,7 +8871,7 @@ function submitExpense(){
 
   if(!expenseName){
 
-    showTransactionError(
+    alert(
       "Please enter the expense name."
     );
 
@@ -9358,7 +8882,7 @@ function submitExpense(){
 
   if(!expenseCategory){
 
-    showTransactionError(
+    alert(
       "Please select an expense category."
     );
 
@@ -9369,7 +8893,7 @@ function submitExpense(){
 
   if(!expenseDate){
 
-    showTransactionError(
+    alert(
       "Please select the expense date."
     );
 
@@ -9380,7 +8904,7 @@ function submitExpense(){
 
   if(expenseAmount <= 0){
 
-    showTransactionError(
+    alert(
       "Please enter a valid expense amount."
     );
 
@@ -9508,22 +9032,9 @@ function submitExpense(){
 
 function deleteLoan(id){
 
-
-  openDeleteConfirm(
-    "Delete this loan?",
-    function(){
-
-      executeDeleteLoan(id);
-
-    }
-  );
-
-
-}
-
-
-
-function executeDeleteLoan(id){
+  if(!confirm("Delete this loan?")){
+    return;
+  }
 
 
   console.log(
@@ -9617,22 +9128,9 @@ function executeDeleteLoan(id){
 
 function deleteCreditCard(id){
 
-
-  openDeleteConfirm(
-    "Delete this credit card?",
-    function(){
-
-      executeDeleteCreditCard(id);
-
-    }
-  );
-
-
-}
-
-
-
-function executeDeleteCreditCard(id){
+  if(!confirm("Delete this credit card?")){
+    return;
+  }
 
 
   console.log(
@@ -9748,7 +9246,7 @@ function performCreditCardDelete(id){
         response.success
       ){
 
-        showTransactionSuccess(
+        alert(
           "Credit card deleted successfully."
         );
 
@@ -9760,7 +9258,7 @@ function performCreditCardDelete(id){
       }
       else{
 
-        showTransactionError(
+        alert(
           response.message ||
           "Unable to delete credit card."
         );
@@ -9778,7 +9276,7 @@ function performCreditCardDelete(id){
       );
 
 
-      showTransactionError(
+      alert(
         "Unable to delete credit card."
       );
 
@@ -9835,9 +9333,7 @@ function editCreditCard(id){
 
       if(!card){
 
-        showTransactionError(
-          "Credit card not found."
-        );
+        alert("Credit card not found.");
 
         return;
 
@@ -9881,20 +9377,6 @@ function editCreditCard(id){
         "#creditCardModal h2"
       ).textContent =
         "Edit Credit Card";
-
-
-      const button =
-        document.getElementById(
-          "creditCardSaveButton"
-        );
-
-
-      if(button){
-
-        button.textContent =
-          "Update Credit Card";
-
-      }
 
 
 
@@ -10126,75 +9608,6 @@ function resetPassword(){
 
 
 
-
-/* =========================
-   LOGOUT
-========================= */
-
-function logout(){
-
-  localStorage.removeItem(
-    "pouchSession"
-  );
-
-
-  window.loggedInUser = null;
-
-
-  const mainApp =
-    document.getElementById(
-      "mainApp"
-    );
-
-
-  const loginScreen =
-    document.getElementById(
-      "loginScreen"
-    );
-
-
-  if(mainApp){
-
-    mainApp.style.display =
-      "none";
-
-  }
-
-
-  if(loginScreen){
-
-    loginScreen.style.display =
-      "flex";
-
-  }
-
-
-  // clear login fields
-
-  const email =
-    document.getElementById(
-      "loginEmail"
-    );
-
-  const password =
-    document.getElementById(
-      "loginPassword"
-    );
-
-
-  if(email){
-    email.value = "";
-  }
-
-
-  if(password){
-    password.value = "";
-  }
-
-
-}
-
-
 function backToLogin(){
 
   document
@@ -10366,10 +9779,8 @@ function saveCreditCardPayment(){
 
   closeCreditCardPaymentModal();
 
-  console.log("SHOWING LOAN PAYMENT LOADING");
-
   showTransactionLoading(
-    "Payment is being saved..."
+    "Saving payment..."
   );
 
 
@@ -10400,8 +9811,8 @@ function saveCreditCardPayment(){
 
       showTransactionSuccess(
         editingCreditCardPaymentId
-          ? "Payment updated successfully."
-          : "Payment saved successfully."
+          ? "Payment updated!"
+          : "Payment saved!"
       );
 
       editingCreditCardPaymentId = "";
@@ -10462,179 +9873,6 @@ function openLoanPaymentModal(){
 
 
   loadLoanPaymentDropdown();
-
-}
-
-function loadLoanPaymentDropdown(){
-
-  callAppsScript(
-    "getLoans",
-    []
-  )
-
-  .then(function(loans){
-
-    const select =
-      document.getElementById(
-        "loanPaymentLoan"
-      );
-
-
-    if(!select) return;
-
-
-    select.innerHTML = "";
-
-
-    if(!loans || loans.length === 0){
-
-      select.innerHTML = `
-        <option value="">
-          No loans available
-        </option>
-      `;
-
-      return;
-
-    }
-
-
-
-    loans.forEach(function(loan){
-
-      select.innerHTML += `
-
-        <option value="${loan.id}">
-          ${loan.loanName}
-          - ₱${Number(
-            loan.outstandingBalance || 0
-          ).toLocaleString()}
-        </option>
-
-      `;
-
-    });
-
-
-  })
-
-  .catch(function(error){
-
-    console.error(
-      "Load Loan Dropdown Error:",
-      error
-    );
-
-  });
-
-}
-
-
-
-
-
-function saveLoanPayment(){
-
-  const data = {
-
-    loanId:
-      document.getElementById(
-        "loanPaymentLoan"
-      ).value,
-
-
-    amount:
-      Number(
-        document.getElementById(
-          "loanPaymentAmount"
-        ).value
-      ),
-
-
-    description:
-      document.getElementById(
-        "loanPaymentDescription"
-      ).value.trim()
-
-  };
-
-
-
-  if(
-    !data.loanId ||
-    data.amount <= 0
-  ){
-
-    showTransactionError(
-      "Please complete payment details."
-    );
-
-    return;
-
-  }
-
-
-
-  console.log("SHOWING LOAN PAYMENT LOADING");
-
-  showTransactionLoading(
-    "Payment is being saved..."
-  );
-
-
-
-  callAppsScript(
-    "saveLoanPayment",
-    [data]
-  )
-
-  .then(function(result){
-
-    if(result && result.success){
-
-      setTimeout(function(){
-
-        showTransactionSuccess(
-          "Payment saved successfully."
-        );
-
-
-        closeLoanPaymentModal();
-
-
-        loadLoanPayments();
-
-
-        loadLoans();
-
-
-      }, 1000);
-
-    }
-    else{
-
-      showTransactionError(
-        result.message ||
-        "Unable to save payment."
-      );
-
-    }
-
-  })
-
-  .catch(function(error){
-
-    console.error(
-      "Save Loan Payment Error:",
-      error
-    );
-
-
-    showTransactionError(
-      "Unable to save payment."
-    );
-
-  });
 
 }
 
@@ -10932,22 +10170,9 @@ function loadLoanPayments(){
 
 function deleteLoanPayment(id){
 
-
-  openDeleteConfirm(
-    "Delete this loan payment?",
-    function(){
-
-      executeDeleteLoanPayment(id);
-
-    }
-  );
-
-
-}
-
-
-
-function executeDeleteLoanPayment(id){
+  if(!confirm("Delete this loan payment?")){
+    return;
+  }
 
 
   if(!id){
@@ -11016,6 +10241,11 @@ function editLoanPayment(id){
   );
 
 
+  showTransactionLoading(
+    "Loading action..."
+  );
+
+
   const payment =
     loanPaymentsCache.find(function(item){
 
@@ -11025,13 +10255,7 @@ function editLoanPayment(id){
 
 
   if(!payment){
-
-    showTransactionError(
-      "Loan payment not found."
-    );
-
     return;
-
   }
 
 
@@ -11089,22 +10313,9 @@ function editLoanPayment(id){
 
 function deleteCreditCardPayment(id){
 
-
-  openDeleteConfirm(
-    "Delete this credit card payment?",
-    function(){
-
-      executeDeleteCreditCardPayment(id);
-
-    }
-  );
-
-
-}
-
-
-
-function executeDeleteCreditCardPayment(id){
+  if(!confirm("Delete this credit card payment?")){
+    return;
+  }
 
 
   console.log(
@@ -11186,6 +10397,11 @@ function editCreditCardPayment(id){
   );
 
 
+  showTransactionLoading(
+    "Loading action..."
+  );
+
+
   const payment =
     creditCardPaymentsCache.find(function(item){
 
@@ -11196,8 +10412,9 @@ function editCreditCardPayment(id){
 
   if(!payment){
 
-    showTransactionError(
-      "Credit card payment not found."
+    console.log(
+      "Credit card payment not found:",
+      id
     );
 
     return;
@@ -11264,25 +10481,12 @@ function editCreditCardPayment(id){
 
 function deleteStablecoin(id){
 
-
-  openDeleteConfirm(
-    "Delete this stablecoin?",
-    function(){
-
-      executeDeleteStablecoin(id);
-
-    }
-  );
-
-
-}
-
-
-
-function executeDeleteStablecoin(id){
-
-
   if(!id){
+    return;
+  }
+
+
+  if(!confirm("Delete this stablecoin?")){
     return;
   }
 
@@ -11370,7 +10574,7 @@ function loadStablecoinTransactions(){
 
       tbody.innerHTML = `
         <tr>
-          <td colspan="8">
+          <td colspan="7">
             No transactions yet
           </td>
         </tr>
@@ -11389,52 +10593,34 @@ function loadStablecoinTransactions(){
 
         <tr>
 
-          <td>
-            ${tx.date}
-          </td>
+          <td>${tx.date}</td>
 
-
-          <td>
-            ${tx.transactionType || "Buy"}
-          </td>
-
-
-          <td>
-            ${tx.stablecoin}
-          </td>
-
+          <td>${tx.stablecoin}</td>
 
           <td>
             ${Number(tx.quantity).toLocaleString()}
           </td>
 
-
           <td>
             ${formatPeso(tx.buyPrice)}
           </td>
-
 
           <td>
             ${formatPeso(tx.totalInvested)}
           </td>
 
-
           <td>
             ${tx.notes || ""}
           </td>
 
-
           <td>
-
             <button
               class="delete-btn"
               onclick="deleteStablecoin('${tx.id}')"
             >
               Delete
             </button>
-
           </td>
-
 
         </tr>
 
@@ -11454,6 +10640,7 @@ function loadStablecoinTransactions(){
     );
 
   });
+
 
 }
 
